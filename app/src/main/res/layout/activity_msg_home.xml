@@ -1,36 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MsgHome"
+    android:id="@+id/parent"
     android:background="@color/black">
-    <View
-        android:id="@+id/top"
+    <FrameLayout
+        android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:layout_alignParentTop="true"/>
-<com.example.squircleview.SquircleView
-    android:id="@+id/me"
-    android:layout_width="50dp"
-    android:layout_height="50dp"
-    android:layout_alignParentEnd="true"
-    android:elevation="10dp"
-    android:layout_marginRight="15dp"
-    android:layout_below="@id/top"
-    android:src="@drawable/me"/>
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/pbnv"
+        app:layout_constraintTop_toTopOf="@id/parent"
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="145dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/msg_top_bar"
-        android:layout_alignParentTop="true"/>
+        />
     <RelativeLayout
+        android:id="@+id/pbnv"
         android:layout_width="match_parent"
         android:layout_height="65dp"
-        android:layout_alignParentBottom="true">
+        app:layout_constraintBottom_toBottomOf="@+id/parent">
         <ImageView
             android:layout_width="42dp"
             android:layout_height="42dp"
@@ -54,7 +43,8 @@
             android:background="@color/black"
             app:itemIconTint="@drawable/bottom_nav_icon_color_selector"
             app:menu="@menu/msg_btm_menu"
+            android:id="@+id/bnv"
             />
 
     </RelativeLayout>
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
