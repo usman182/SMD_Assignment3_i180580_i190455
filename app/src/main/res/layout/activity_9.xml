@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:padding="10dp">
+
+
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@color/black"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_baseline_arrow_back_24" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="70dp"
+            android:text="Add Playlist"
+            android:textColor="@color/white"
+            android:textSize="35dp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="210dp"
+            android:layout_height="190dp"
+            android:layout_marginStart="90dp"
+            android:layout_marginTop="90dp"
+            android:background="@drawable/rounded_texts_2" />
+
+
+        <EditText
+            android:id="@+id/playlistname"
+            android:layout_width="380dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="310dp"
+            android:background="@drawable/rounded_texts"
+            android:hint="Playlist Name"
+            android:padding="15dp"
+            android:textColor="#FFC107"
+            android:textColorHint="@color/corn"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/description"
+            android:layout_width="380dp"
+            android:layout_height="85dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="390dp"
+            android:background="@drawable/rounded_texts"
+            android:hint="Description"
+            android:padding="15dp"
+            android:textColor="#FFC107"
+            android:textColorHint="@color/corn"
+            android:textStyle="bold" />
+
+
+        <Button
+            android:id="@+id/addplaylist"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="245dp"
+            android:layout_marginTop="510dp"
+            android:background="@drawable/rounded_texts_2"
+            android:backgroundTint="@color/corn"
+            android:hint="Add Playlist"
+            android:textColorHint="@color/white"
+            android:textSize="20dp" />
+
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="45dp">
+
+
+        <ImageButton
+            android:id="@+id/love"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:background="#2a2831"
+            android:padding="40dp"
+            android:src="@drawable/love" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:background="#2a2831"
+            android:padding="40dp"
+            android:src="@drawable/plus" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:background="#2a2831"
+            android:padding="40dp"
+            android:src="@drawable/search" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:background="#2a2831"
+            android:padding="40dp"
+            android:src="@drawable/listenlater" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#2a2831">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:text="Liked"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:background="#2a2831"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="75dp"
+            android:text="Add"
+            android:textColor="@color/white"
+            android:background="#2a2831"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="75dp"
+            android:text="Search"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:text="listen Later"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
+
