@@ -62,7 +62,7 @@ public class activity3 extends AppCompatActivity {
                     mAuth.signInWithEmailAndPassword(email, password)
 
                                     .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                                        //FirebaseUser user = mAuth.getCurrentUser();
+                                        FirebaseUser user = mAuth.getCurrentUser();
                                         @Override
                                         public void onSuccess(AuthResult authResult) {
                                             startActivity(new Intent(activity3.this, activity4.class));
