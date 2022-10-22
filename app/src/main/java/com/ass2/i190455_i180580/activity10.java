@@ -62,8 +62,14 @@ public class activity10 extends AppCompatActivity {
                     ).show();
                 }
                 else {
-
-                    startActivity(new Intent(activity10.this, activity11.class));
+                    // get the song name
+                    //String songName = title.getText().toString();
+                    //Intent intent = new Intent(activity10.this, activity9.class);
+                    //intent.putExtra("title", songName);
+                    //setResult(1, intent);
+                    //onActivityResult(100, 1, intent);
+                    //finish();
+                    startActivity(new Intent(activity10.this, activity9.class));
                 }
             }
         });
@@ -121,7 +127,7 @@ public class activity10 extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Uri uri) {
                                         //tv.setText(uri.toString());
-                                        //Picasso.get().load(uri.toString()).into(upload);
+                                        Picasso.get().load(uri.toString()).into(upload);
                                         Log.d("imageurl", uri.toString());
                                     }
                                 });

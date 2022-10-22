@@ -34,12 +34,33 @@
             android:textStyle="bold" />
 
         <ImageView
-            android:layout_width="210dp"
-            android:layout_height="190dp"
-            android:layout_marginStart="90dp"
+            android:id="@+id/musicpic"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="90dp"
-            android:background="@drawable/rounded_texts_2" />
+            android:src="@drawable/rounded_texts_2" />
 
+        <ImageView
+            android:id="@+id/uploadmus"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="150dp"
+            android:src="@drawable/upload" />
+
+        <EditText
+            android:id="@+id/songnamefromfirebase"
+            android:layout_width="380dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="250dp"
+            android:background="@drawable/rounded_texts"
+            android:hint="Enter Song Name to Search"
+            android:padding="15dp"
+            android:textColor="#FFC107"
+            android:textColorHint="@color/corn"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/playlistname"

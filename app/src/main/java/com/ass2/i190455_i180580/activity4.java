@@ -25,19 +25,19 @@ public class activity4 extends AppCompatActivity {
         btn2 = findViewById(R.id.continuewithgoogle);
         btn3 = findViewById(R.id.createaccount);
 
-        // toasts when clicking the sign in button
+        // toasts when clicking the create account button
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                    startActivity(new Intent(activity4.this, activity5.class));
+                    startActivity(new Intent(activity4.this, activity2.class));
 
 
             }
         });
 
 
-        // for sign up
+        // for sign in
         txt1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
