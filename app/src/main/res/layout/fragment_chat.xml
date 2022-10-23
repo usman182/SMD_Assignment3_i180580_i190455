@@ -24,6 +24,7 @@
         android:src="@drawable/me"/>
 
     <ImageView
+        android:id="@+id/msg_top_bar"
         android:layout_width="match_parent"
         android:layout_height="145dp"
         android:scaleType="fitXY"
@@ -34,6 +35,17 @@
         android:layout_height="match_parent"
         android:text="Chat Fragment"
         android:textColor="@color/white"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:id="@+id/bnv_placeholder"
+        android:layout_alignParentBottom="true"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/contacts_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bnv_placeholder"
+        android:layout_below="@id/msg_top_bar"/>
 <!--    <RelativeLayout-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="65dp"-->

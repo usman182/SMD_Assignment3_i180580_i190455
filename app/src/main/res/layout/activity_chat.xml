@@ -129,7 +129,7 @@
         android:layout_centerVertical="true"
         />
     <ImageView
-        android:id="@+id/upload_pic"
+        android:id="@+id/take_pic"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:src="@drawable/ic_baseline_photo_camera_placeholder_24"
