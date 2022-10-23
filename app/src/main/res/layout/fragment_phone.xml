@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".PhoneFragment"
+    android:background="@color/black">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Phone Fragment"
+        android:textColor="@color/white"/>
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="65dp"-->
+<!--        android:layout_alignParentBottom="true">-->
+<!--        <ImageView-->
+<!--            android:layout_width="42dp"-->
+<!--            android:layout_height="42dp"-->
+<!--            android:background="@drawable/golden_button_background"-->
+<!--            android:scaleType="fitCenter"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:elevation="10dp"-->
+<!--            android:layout_marginBottom="15dp"/>-->
+<!--        <ImageView-->
+<!--            android:layout_width="24dp"-->
+<!--            android:layout_height="24dp"-->
+<!--            android:src="@drawable/ic_baseline_add_24"-->
+<!--            android:scaleType="fitCenter"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:elevation="10dp"-->
+<!--            android:layout_marginBottom="15dp"/>-->
+<!--        <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="?actionBarSize"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:background="@color/black"-->
+<!--            app:itemIconTint="@drawable/bottom_nav_icon_color_selector"-->
+<!--            app:menu="@menu/msg_btm_menu"-->
+<!--            />-->
+
+<!--    </RelativeLayout>-->
+
+</RelativeLayout>
