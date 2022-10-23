@@ -105,6 +105,7 @@ public class activity10 extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100 && resultCode == RESULT_OK) {
             if (data != null) {
+                // Uri
                 Uri uri = data.getData();
                 FirebaseStorage storage = FirebaseStorage.getInstance();
 
