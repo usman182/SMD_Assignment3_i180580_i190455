@@ -67,6 +67,9 @@ public class activity9 extends AppCompatActivity {
                 Intent intent = new Intent(activity9.this, activity5.class);
                 intent.putExtra("title", title);
                 intent.putExtra("link", downloadLink);
+
+
+
                 intent.putExtra("playlistname", playlistname);
                 setResult(1, intent);
                 onActivityResult(100, 1, intent);
