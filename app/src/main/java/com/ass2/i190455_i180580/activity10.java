@@ -62,13 +62,6 @@ public class activity10 extends AppCompatActivity {
                     ).show();
                 }
                 else {
-                    // get the song name
-                    //String songName = title.getText().toString();
-                    //Intent intent = new Intent(activity10.this, activity9.class);
-                    //intent.putExtra("title", songName);
-                    //setResult(1, intent);
-                    //onActivityResult(100, 1, intent);
-                    //finish();
                     startActivity(new Intent(activity10.this, activity9.class));
                 }
             }
@@ -91,6 +84,7 @@ public class activity10 extends AppCompatActivity {
             }
         });
 
+        // back button
         imgbtn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,13 +106,10 @@ public class activity10 extends AppCompatActivity {
         if (requestCode == 100 && resultCode == RESULT_OK) {
             if (data != null) {
                 Uri uri = data.getData();
-                //createMediaPlayer(uri);
-                //musicpic.setImageURI(uri);
                 FirebaseStorage storage = FirebaseStorage.getInstance();
-                Calendar c = Calendar.getInstance();
 
-                StorageReference ref = storage.getReference().child("audio/"+title.getText().toString()+".mp3");
-                ref.putFile(uri)
+                StorageReference storageReference = storage.getReference().child("audio/"+title.getText().toString()+".mp3");
+                storageReference.putFile(uri)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -126,9 +117,7 @@ public class activity10 extends AppCompatActivity {
                                 task.addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
-                                        //tv.setText(uri.toString());
                                         Picasso.get().load(uri.toString()).into(upload);
-                                        Log.d("imageurl", uri.toString());
                                     }
                                 });
                             }
