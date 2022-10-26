@@ -62,7 +62,7 @@ public class activity10 extends AppCompatActivity {
                     ).show();
                 }
                 else {
-                    startActivity(new Intent(activity10.this, activity9.class));
+                    startActivity(new Intent(activity10.this, activity5.class));
                 }
             }
         });
@@ -88,7 +88,7 @@ public class activity10 extends AppCompatActivity {
         imgbtn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(activity10.this, activity9.class));
+                startActivity(new Intent(activity10.this, activity5.class));
             }
         });
 
@@ -105,7 +105,7 @@ public class activity10 extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100 && resultCode == RESULT_OK) {
             if (data != null) {
-                // Uri
+
                 Uri uri = data.getData();
                 FirebaseStorage storage = FirebaseStorage.getInstance();
 

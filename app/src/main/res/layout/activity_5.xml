@@ -232,9 +232,9 @@
             android:textSize="20dp"/>
 
         <ImageButton
+            android:id="@+id/previoussong"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
-            android:layout_marginStart="110dp"
             android:background="@color/black"
             android:src="@drawable/rewind"/>
 
@@ -249,10 +249,11 @@
 
 
         <ImageButton
+            android:id="@+id/nextsong"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
             android:background="@color/black"
-            android:src="@drawable/rewind"/>
+            android:src="@drawable/fast"/>
 
         <View
             android:layout_width="2dp"

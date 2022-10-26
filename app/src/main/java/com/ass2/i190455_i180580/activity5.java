@@ -11,6 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -40,13 +41,13 @@ public class activity5 extends AppCompatActivity {
     TextView song, playlistname;
     ImageView plalist1;
     ImageView plusimage;
-    ImageButton imgbtn1, addbutton, play, resume_play1;
+    ImageButton imgbtn1, addbutton, play, previoussong, nextsong;
     String title;
     String downloadLink;
     String playlistName;
-    Intent i;
-    MediaPlayer mediaPlayer = new MediaPlayer();
-    @SuppressLint("MissingInflatedId")
+    ArrayList<AudioModel> songsList;
+    AudioModel currentSong;
+    MediaPlayer mediaPlayer = MyMediaPlayer.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,8 +63,32 @@ public class activity5 extends AppCompatActivity {
         playlistname = findViewById(R.id.playlistname);
         plusimage = findViewById(R.id.plusimage);
         play = findViewById(R.id.play);
+        previoussong = findViewById(R.id.previoussong);
+        nextsong = findViewById(R.id.nextsong);
+
+        song.setSelected(true);
+        songsList = (ArrayList<AudioModel>) getIntent().getSerializableExtra("list");
+        try {
+            setResourcesWithMusic();
+            activity5.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (mediaPlayer != null) {
+                        if (mediaPlayer.isPlaying()) {
+                            play.setImageResource(R.drawable.ic_baseline_play_arrow_24);
+                        }
+                        else {
+                            play.setImageResource(R.drawable.ic_baseline_pause_24);
+                        }
+                    }
+                    new Handler().postDelayed(this, 100);
+                }
+            });
 
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 //        imgbtn1 = findViewById(R.id.play);
 
         img1.setOnClickListener(new View.OnClickListener() {
@@ -80,18 +105,18 @@ public class activity5 extends AppCompatActivity {
             }
         });
 
-//        plusimage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(activity5.this, activity10.class));
-//            }
-//        });
+        plusimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(activity5.this, activity10.class));
+            }
+        });
 
 
         addbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                i = new Intent(activity5.this, activity9.class);
+                Intent i = new Intent(activity5.this, activity9.class);
                 startActivityForResult(i, 100);
             }
         });
@@ -99,61 +124,31 @@ public class activity5 extends AppCompatActivity {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mediaPlayer.pause();
-                String uri = "@drawable/ic_baseline_play_arrow_24";
-                int imageResource = getResources().getIdentifier(uri, null, getPackageName());
-                Drawable res = getResources().getDrawable(imageResource);
-                play.setImageDrawable(res);
+                if (mediaPlayer.isPlaying()) {
+                    mediaPlayer.pause();
 
-                play.setId(R.id.resume_play);
-                resume_play1 = findViewById(R.id.resume_play);
-//                play.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        mediaPlayer.pause();
-//                        String uri = "@drawable/ic_baseline_pause_24";
-//                        int imageResource = getResources().getIdentifier(uri, null, getPackageName());
-//                        Drawable res = getResources().getDrawable(imageResource);
-//                        play.setImageDrawable(res);
-//                    }
-//                });
+                    String uri = "@drawable/ic_baseline_play_arrow_24";
+                    int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+                    Drawable res = getResources().getDrawable(imageResource);
+                    play.setImageDrawable(res);
+                }
 
-//                resume_play.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        mediaPlayer.start();
-//                        Toast.makeText(
-//                                activity5.this, "upload audio",
-//                                Toast.LENGTH_LONG).show();
-//
-//                    }
-//                });
+                else {
+                    mediaPlayer.start();
+
+                    String uri = "@drawable/ic_baseline_pause_24";
+                    int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+                    Drawable res = getResources().getDrawable(imageResource);
+                    play.setImageDrawable(res);
+                }
 
             }
         });
 
 
-
-
-
-
         plalist1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                startActivity(new Intent(activity5.this, activity17.class));
-//                Intent intent = new Intent(activity5.this, activity17.class);
-//                intent.putExtra("link2", downloadLink);
-//
-//                setResult(1, intent);
-//                onActivityResult(100, 1, intent);
-//                finish();
-//                Intent intent = new Intent(activity5.this, activity16.class);
-//                onActivityResult(100, 1, i);
-//                intent.putExtra("link2", downloadLink);
-//
-//                setResult(1, intent);
-//                onActivityResult(100, 1, intent);
-//                finish();
 
                 String uri = "@drawable/ic_baseline_pause_24";
                 int imageResource = getResources().getIdentifier(uri, null, getPackageName());
@@ -177,19 +172,61 @@ public class activity5 extends AppCompatActivity {
             }
         });
 
-//        resume_play1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mediaPlayer.start();
-//                        Toast.makeText(
-//                                activity5.this, "upload audio",
-//                                Toast.LENGTH_LONG).show();
-//
-//            }
-//        });
+    }
 
+    public void setResourcesWithMusic() throws IOException {
+        currentSong = songsList.get(MyMediaPlayer.currentIndex);
+        song.setText(currentSong.getTitle());
+        play.setOnClickListener(v-> pausePlay());
+        nextsong.setOnClickListener(v-> {
+            try {
+                playNextSong();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        previoussong.setOnClickListener(v-> {
+            try {
+                playPreviousSong();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
+        playMusic();
+    }
 
+    private void playMusic() throws IOException {
+        mediaPlayer.reset();
+        mediaPlayer.setDataSource(currentSong.getPath());
+        mediaPlayer.prepare();
+        mediaPlayer.start();
+    }
+
+    private void playNextSong() throws IOException {
+        if (MyMediaPlayer.currentIndex == songsList.size()-1)
+            return;
+
+        MyMediaPlayer.currentIndex +=1;
+        mediaPlayer.reset();
+        setResourcesWithMusic();
+    }
+
+    private void playPreviousSong() throws IOException {
+        if (MyMediaPlayer.currentIndex == 0)
+            return;
+
+        MyMediaPlayer.currentIndex -=1;
+        mediaPlayer.reset();
+        setResourcesWithMusic();
+    }
+
+    private void pausePlay(){
+        if (mediaPlayer.isPlaying())
+            mediaPlayer.pause();
+
+        else
+            mediaPlayer.start();
     }
 
     @Override

@@ -56,7 +56,7 @@ public class activity2 extends AppCompatActivity {
         btn1 = findViewById(R.id.signupbutton);
         mAuth = FirebaseAuth.getInstance();
 
-        // toasts when clicking the sign up button
+        // When clicking the sign up button
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
