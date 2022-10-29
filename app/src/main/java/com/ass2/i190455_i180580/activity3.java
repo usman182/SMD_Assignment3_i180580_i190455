@@ -65,7 +65,14 @@ public class activity3 extends AppCompatActivity {
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         @Override
                                         public void onSuccess(AuthResult authResult) {
-                                            startActivity(new Intent(activity3.this, activity5.class));
+
+                                            String userFullName = getIntent().getStringExtra("userFullName");
+
+                                            Intent intent = new Intent(activity3.this, activity5.class);
+                                            intent.putExtra("userFullName", userFullName);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            startActivity(intent);
+
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {

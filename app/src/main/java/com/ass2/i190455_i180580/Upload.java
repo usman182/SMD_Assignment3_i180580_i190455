@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class Upload implements Serializable {
     private String mName;
     private String mSongURL;
+    private String playlistName;
 
     public Upload() {
 
@@ -30,4 +31,9 @@ public class Upload implements Serializable {
     public void setSongUrl(String songUrl) {
         mSongURL = songUrl;
     }
+
+
+    public void setPlaylistName(String playlistName) {    this.playlistName = playlistName;    }
+
+    public String getPlaylistName() {    return playlistName;    }
 }

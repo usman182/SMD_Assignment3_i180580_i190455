@@ -49,18 +49,6 @@
             android:layout_marginTop="150dp"
             android:src="@drawable/upload" />
 
-        <EditText
-            android:id="@+id/songnamefromfirebase"
-            android:layout_width="380dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="250dp"
-            android:background="@drawable/rounded_texts"
-            android:hint="Enter Song Name to Search"
-            android:padding="15dp"
-            android:textColor="#FFC107"
-            android:textColorHint="@color/corn"
-            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/playlistname"

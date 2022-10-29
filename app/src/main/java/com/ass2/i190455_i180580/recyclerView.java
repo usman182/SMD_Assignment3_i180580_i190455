@@ -51,30 +51,9 @@ public class recyclerView extends AppCompatActivity {
 
         mUploads = new ArrayList<>();
 
-//        if(checkPermission() == false){
-//            requestPermission();
-//            return;
-//        }
 
 
-//        String[] projection = {
-//                MediaStore.Audio.Media.TITLE,
-//                MediaStore.Audio.Media.DATA,
-//                MediaStore.Audio.Media.DURATION
-//        };
-//
-//
-//        String selection = MediaStore.Audio.Media.IS_MUSIC +" != 0";
-//
-//
-//            Cursor cursor = getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, projection, selection, null, null);
-//
-//
-//            while (cursor.moveToNext()) {
-//                AudioModel songsData = new AudioModel(cursor.getString(1), cursor.getString(0), cursor.getString(2));
-//                if (new File(songsData.getPath()).exists())
-//                    songsList.add(songsData);
-//            }
+            String playlistname = getIntent().getStringExtra("playlistname");
 
 
             mDatabaseRef = FirebaseDatabase.getInstance().getReference("audios");
@@ -85,7 +64,7 @@ public class recyclerView extends AppCompatActivity {
                         Upload upload1 = postSnapshot.getValue(Upload.class);
                         mUploads.add(upload1);
                         System.out.println("Song2 is : --> " + mUploads.get(0).getSongUrl());
-                        recyclerView.setAdapter(new MusicListAdaptor(mUploads, recyclerView.this));
+                        recyclerView.setAdapter(new MusicListAdaptor(mUploads, recyclerView.this, playlistname));
                     }
                 }
 
@@ -101,21 +80,6 @@ public class recyclerView extends AppCompatActivity {
 
     }
 
-    boolean checkPermission(){
-        int result = ContextCompat.checkSelfPermission(recyclerView.this, Manifest.permission.READ_EXTERNAL_STORAGE);
-        if(result == PackageManager.PERMISSION_GRANTED){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    void requestPermission(){
-        if(ActivityCompat.shouldShowRequestPermissionRationale(recyclerView.this,Manifest.permission.READ_EXTERNAL_STORAGE)){
-            Toast.makeText(recyclerView.this,"READ PERMISSION IS REQUIRED,PLEASE ALLOW FROM SETTTINGS",Toast.LENGTH_SHORT).show();
-        }else
-            ActivityCompat.requestPermissions(recyclerView.this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},123);
-    }
 
 //    @Override
 //    protected void onResume() {

@@ -17,13 +17,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class activity9 extends AppCompatActivity {
 
       EditText edtxt1;
-      EditText edtxt2;
     ImageButton imgbtn1;
     Button btn1;
     ImageView upload, musicpic;
@@ -42,7 +42,6 @@ public class activity9 extends AppCompatActivity {
         setContentView(R.layout.activity_9);
 
         edtxt1 = findViewById(R.id.playlistname);
-        edtxt2 = findViewById(R.id.songnamefromfirebase);
         imgbtn1 = findViewById(R.id.back);
         btn1 = findViewById(R.id.addplaylist);
         upload = findViewById(R.id.uploadmus);
@@ -56,26 +55,17 @@ public class activity9 extends AppCompatActivity {
             }
         });
 
+        // when the user clicks on the add playlist button
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                startActivity(new Intent(activity9.this, recyclerView.class));
-//                Intent i = new Intent(activity9.this, recyclerView.class);
-//                startActivityForResult(i, 100);
-//                String title = audioID;
-//                String downloadLink = audioLink;
-//                String playlistname = edtxt1.getText().toString();
-//                Intent intent = new Intent(activity9.this, activity5.class);
-//                intent.putExtra("title", title);
-//                intent.putExtra("link", downloadLink);
-//
-//
-//
-//                intent.putExtra("playlistname", playlistname);
-//                setResult(1, intent);
-//                onActivityResult(100, 1, intent);
-//                finish();
+                //startActivity(new Intent(activity9.this, recyclerView.class));
+
+                Intent intent = new Intent(activity9.this, recyclerView.class);
+                intent.putExtra("playlistname", edtxt1.getText().toString());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
 
             }
         });

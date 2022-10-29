@@ -39,7 +39,7 @@ import java.util.List;
 
 public class activity5 extends AppCompatActivity {
 
-    ImageView img1, img2;
+    ImageView hamburger, img2;
     TextView song, playlistname;
     ImageView plalist1;
     ImageView plusimage;
@@ -56,7 +56,7 @@ public class activity5 extends AppCompatActivity {
         setContentView(R.layout.activity_5);
 
 
-        img1 = findViewById(R.id.hamburger1);
+        hamburger = findViewById(R.id.hamburger1);
         img2 = findViewById(R.id.personicon);
         plalist1 = findViewById(R.id.playlist1);
         song = findViewById(R.id.song);
@@ -71,10 +71,17 @@ public class activity5 extends AppCompatActivity {
 
         imgbtn1 = findViewById(R.id.play);
 
-        img1.setOnClickListener(new View.OnClickListener() {
+        hamburger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(activity5.this, activity8.class));
+
+                String userFullName = getIntent().getStringExtra("userFullName");
+
+                Intent intent = new Intent(activity5.this, activity8.class);
+                intent.putExtra("userFullName", userFullName);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
             }
         });
 
@@ -85,39 +92,16 @@ public class activity5 extends AppCompatActivity {
             }
         });
 
-        plusimage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(activity5.this, activity10.class));
-            }
-        });
 
 
         // to open the add playlist activity
         addbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(activity5.this, activity9.class));
-//                Intent i = new Intent(activity5.this, activity9.class);
-//                startActivityForResult(i, 100);
+                startActivity(new Intent(activity5.this, activity10.class));
             }
         });
 
-        play.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mediaPlayer.isPlaying()) {
-                    mediaPlayer.pause();
-
-                    play.setImageResource(R.drawable.ic_baseline_pause_24);
-                } else {
-                    mediaPlayer.start();
-
-                    play.setImageResource(R.drawable.ic_baseline_play_arrow_24);
-                }
-
-            }
-        });
 
 
         plalist1.setOnClickListener(new View.OnClickListener() {
@@ -132,98 +116,11 @@ public class activity5 extends AppCompatActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
 
-
-//                mediaPlayer = new MediaPlayer();
-//                try {
-//                    songsList = (List<Upload>) getIntent().getSerializableExtra("list");
-//                    mediaPlayer.setDataSource(songsList.get(MyMediaPlayer.currentIndex).getSongUrl());
-//
-//                    try {
-//                        setResourcesWithMusic();
-//                        activity5.this.runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                if (mediaPlayer != null) {
-//                                    if (mediaPlayer.isPlaying()) {
-//                                        play.setImageResource(R.drawable.ic_baseline_pause_24);
-//                                    }
-//                                    else {
-//                                        play.setImageResource(R.drawable.ic_baseline_play_arrow_24);
-//                                    }
-//                                }
-//                                new Handler().postDelayed(this, 100);
-//                            }
-//                        });
-//
-//
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//
             }
         });
     }
 
-            public void setResourcesWithMusic() throws IOException {
-                currentSong = songsList.get(MyMediaPlayer.currentIndex);
-                song.setText(currentSong.getName());
 
-                play.setOnClickListener(v -> pausePlay());
-                nextsong.setOnClickListener(v -> {
-                    try {
-                        playNextSong();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-                previoussong.setOnClickListener(v -> {
-                    try {
-                        playPreviousSong();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-
-                playMusic();
-            }
-
-            private void playMusic() throws IOException {
-                mediaPlayer.reset();
-                mediaPlayer.setDataSource(currentSong.getSongUrl());
-                mediaPlayer.prepare();
-                mediaPlayer.start();
-            }
-
-            private void playNextSong() throws IOException {
-                if (MyMediaPlayer.currentIndex == songsList.size() - 1)
-                    return;
-
-                MyMediaPlayer.currentIndex += 1;
-                mediaPlayer.reset();
-                setResourcesWithMusic();
-            }
-
-            private void playPreviousSong() throws IOException {
-                if (MyMediaPlayer.currentIndex == 0)
-                    return;
-
-                MyMediaPlayer.currentIndex -= 1;
-                mediaPlayer.reset();
-                setResourcesWithMusic();
-            }
-
-            private void pausePlay() {
-                if (mediaPlayer.isPlaying())
-                    mediaPlayer.pause();
-
-                else
-                    mediaPlayer.start();
-            }
 
 
         }

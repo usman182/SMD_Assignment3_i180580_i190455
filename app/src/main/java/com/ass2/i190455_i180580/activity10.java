@@ -101,7 +101,7 @@ public class activity10 extends AppCompatActivity {
         imgbtn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(activity10.this, activity5.class));
+                startActivity(new Intent(activity10.this, activity9.class));
             }
         });
 
@@ -123,6 +123,10 @@ public class activity10 extends AppCompatActivity {
                 FirebaseStorage storage = FirebaseStorage.getInstance();
 
                 StorageReference storageReference = storage.getReference().child("audio/"+title.getText().toString()+".mp3");
+
+
+
+                // for creating an audios folder entry in the real time database
                 mDatabaseRef = FirebaseDatabase.getInstance().getReference("audios");
 
 

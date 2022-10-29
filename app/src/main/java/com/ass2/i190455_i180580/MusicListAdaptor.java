@@ -26,10 +26,12 @@ public class MusicListAdaptor extends RecyclerView.Adapter<MusicListAdaptor.View
 
     List<Upload> songsList;
     Context context;
+    String playlistname;
 
-    public MusicListAdaptor(List<Upload> songsList, Context context) {
+    public MusicListAdaptor(List<Upload> songsList, Context context, String playlistname) {
         this.songsList = songsList;
         this.context = context;
+        this.playlistname = playlistname;
     }
 
 
@@ -42,7 +44,9 @@ public class MusicListAdaptor extends RecyclerView.Adapter<MusicListAdaptor.View
     @Override
     public void onBindViewHolder(ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Upload songsData = songsList.get(position);
+        songsData.setPlaylistName(playlistname);
         holder.title.setText(songsData.getName());
+
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

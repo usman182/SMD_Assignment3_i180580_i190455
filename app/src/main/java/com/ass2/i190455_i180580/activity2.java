@@ -19,6 +19,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.io.Serializable;
+import java.util.List;
+
 public class activity2 extends AppCompatActivity {
 
     TextView txt1;
@@ -31,6 +34,7 @@ public class activity2 extends AppCompatActivity {
     ImageButton imgbt3;
     CheckBox checkBox1;
     Button btn1;
+
 
     FirebaseAuth mAuth;
     @Override
@@ -91,7 +95,11 @@ public class activity2 extends AppCompatActivity {
                                     .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                         @Override
                                         public void onSuccess(AuthResult authResult) {
-                                            startActivity(new Intent(activity2.this, activity3.class));
+                                            Intent intent = new Intent(activity2.this, activity3.class);
+
+                                            intent.putExtra("userFullName", name);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            startActivity(intent);
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
@@ -105,6 +113,8 @@ public class activity2 extends AppCompatActivity {
                             });
 
                 }
+
+
 
             }
 
