@@ -11,10 +11,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class activity9 extends AppCompatActivity {
 
@@ -29,6 +33,9 @@ public class activity9 extends AppCompatActivity {
     String audioID = null;
     Task<Uri> task;
     String audioLink = null;
+    List<Upload> songsList;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,26 +52,30 @@ public class activity9 extends AppCompatActivity {
         imgbtn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(activity9.this, activity8.class));
+                startActivity(new Intent(activity9.this, activity5.class));
             }
         });
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String title = audioID;
-                String downloadLink = audioLink;
-                String playlistname = edtxt1.getText().toString();
-                Intent intent = new Intent(activity9.this, activity5.class);
-                intent.putExtra("title", title);
-                intent.putExtra("link", downloadLink);
 
-
-
-                intent.putExtra("playlistname", playlistname);
-                setResult(1, intent);
-                onActivityResult(100, 1, intent);
-                finish();
+                startActivity(new Intent(activity9.this, recyclerView.class));
+//                Intent i = new Intent(activity9.this, recyclerView.class);
+//                startActivityForResult(i, 100);
+//                String title = audioID;
+//                String downloadLink = audioLink;
+//                String playlistname = edtxt1.getText().toString();
+//                Intent intent = new Intent(activity9.this, activity5.class);
+//                intent.putExtra("title", title);
+//                intent.putExtra("link", downloadLink);
+//
+//
+//
+//                intent.putExtra("playlistname", playlistname);
+//                setResult(1, intent);
+//                onActivityResult(100, 1, intent);
+//                finish();
 
             }
         });
@@ -83,16 +94,11 @@ public class activity9 extends AppCompatActivity {
 
 
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        //String title = data.getStringExtra("title");
-//        //edtxt1.setText(title);
-//        if (requestCode == 100 && resultCode == RESULT_OK) {
-//            if (data != null) {
-//
-//            }
-//        }
-//    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        //songsList = (ArrayList<Upload>) getIntent().getSerializableExtra("list");
+
+    }
 }

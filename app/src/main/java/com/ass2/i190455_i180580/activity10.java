@@ -21,6 +21,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -37,6 +39,9 @@ public class activity10 extends AppCompatActivity {
     MediaPlayer mediaPlayer;
     FirebaseAuth mAuth;
     EditText title;
+    DatabaseReference mDatabaseRef;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,14 +115,26 @@ public class activity10 extends AppCompatActivity {
                 FirebaseStorage storage = FirebaseStorage.getInstance();
 
                 StorageReference storageReference = storage.getReference().child("audio/"+title.getText().toString()+".mp3");
+                mDatabaseRef = FirebaseDatabase.getInstance().getReference("audios");
+
+
                 storageReference.putFile(uri)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 Task<Uri> task = taskSnapshot.getStorage().getDownloadUrl();
+
+
+
+
                                 task.addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
+                                        //System.out.println("Song1 is : --> " + uri.toString());
+                                        Upload upload1 = new Upload(title.getText().toString(), uri.toString());
+                                        String uploadId = mDatabaseRef.push().getKey();
+                                        mDatabaseRef.child(uploadId).setValue(upload1);
+
                                         Picasso.get().load(uri.toString()).into(upload);
                                     }
                                 });

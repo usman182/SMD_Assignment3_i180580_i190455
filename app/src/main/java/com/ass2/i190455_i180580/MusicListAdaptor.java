@@ -5,13 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,10 +24,10 @@ import com.squareup.picasso.Target;
 
 public class MusicListAdaptor extends RecyclerView.Adapter<MusicListAdaptor.ViewHolder> {
 
-    ArrayList<AudioModel> songsList;
+    List<Upload> songsList;
     Context context;
 
-    public MusicListAdaptor(ArrayList<AudioModel> songsList, Context context) {
+    public MusicListAdaptor(List<Upload> songsList, Context context) {
         this.songsList = songsList;
         this.context = context;
     }
@@ -38,9 +41,8 @@ public class MusicListAdaptor extends RecyclerView.Adapter<MusicListAdaptor.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        AudioModel songsData = songsList.get(position);
-        holder.title.setText(songsData.getTitle());
-
+        Upload songsData = songsList.get(position);
+        holder.title.setText(songsData.getName());
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -51,7 +53,7 @@ public class MusicListAdaptor extends RecyclerView.Adapter<MusicListAdaptor.View
                 MyMediaPlayer.getInstance().reset();
                 MyMediaPlayer.currentIndex = position;
                 Intent i = new Intent(context, activity5.class);
-                i.putExtra("list", songsList);
+                i.putExtra("list", (Serializable) songsList);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(i);
             }

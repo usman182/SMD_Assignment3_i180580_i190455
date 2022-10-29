@@ -34,6 +34,7 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class activity5 extends AppCompatActivity {
 
@@ -45,8 +46,8 @@ public class activity5 extends AppCompatActivity {
     String title;
     String downloadLink;
     String playlistName;
-    ArrayList<AudioModel> songsList;
-    AudioModel currentSong;
+    List<Upload> songsList;
+    Upload currentSong;
     MediaPlayer mediaPlayer = MyMediaPlayer.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,29 +68,8 @@ public class activity5 extends AppCompatActivity {
         nextsong = findViewById(R.id.nextsong);
 
         song.setSelected(true);
-        songsList = (ArrayList<AudioModel>) getIntent().getSerializableExtra("list");
-        try {
-            setResourcesWithMusic();
-            activity5.this.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (mediaPlayer != null) {
-                        if (mediaPlayer.isPlaying()) {
-                            play.setImageResource(R.drawable.ic_baseline_play_arrow_24);
-                        }
-                        else {
-                            play.setImageResource(R.drawable.ic_baseline_pause_24);
-                        }
-                    }
-                    new Handler().postDelayed(this, 100);
-                }
-            });
 
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-//        imgbtn1 = findViewById(R.id.play);
+        imgbtn1 = findViewById(R.id.play);
 
         img1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,11 +93,13 @@ public class activity5 extends AppCompatActivity {
         });
 
 
+        // to open the add playlist activity
         addbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(activity5.this, activity9.class);
-                startActivityForResult(i, 100);
+                startActivity(new Intent(activity5.this, activity9.class));
+//                Intent i = new Intent(activity5.this, activity9.class);
+//                startActivityForResult(i, 100);
             }
         });
 
@@ -127,19 +109,13 @@ public class activity5 extends AppCompatActivity {
                 if (mediaPlayer.isPlaying()) {
                     mediaPlayer.pause();
 
-                    String uri = "@drawable/ic_baseline_play_arrow_24";
-                    int imageResource = getResources().getIdentifier(uri, null, getPackageName());
-                    Drawable res = getResources().getDrawable(imageResource);
-                    play.setImageDrawable(res);
+                    play.setImageResource(R.drawable.ic_baseline_pause_24);
                 }
 
                 else {
                     mediaPlayer.start();
 
-                    String uri = "@drawable/ic_baseline_pause_24";
-                    int imageResource = getResources().getIdentifier(uri, null, getPackageName());
-                    Drawable res = getResources().getDrawable(imageResource);
-                    play.setImageDrawable(res);
+                    play.setImageResource(R.drawable.ic_baseline_play_arrow_24);
                 }
 
             }
@@ -150,21 +126,36 @@ public class activity5 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String uri = "@drawable/ic_baseline_pause_24";
-                int imageResource = getResources().getIdentifier(uri, null, getPackageName());
-                Drawable res = getResources().getDrawable(imageResource);
-                play.setImageDrawable(res);
+
 
                 mediaPlayer = new MediaPlayer();
                 try {
-                    mediaPlayer.setDataSource(downloadLink);
-                    mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                        @Override
-                        public void onPrepared(MediaPlayer mp) {
-                            mp.start();
-                        }
-                    });
-                    mediaPlayer.prepare();
+                    songsList = (List<Upload>) getIntent().getSerializableExtra("list");
+                    mediaPlayer.setDataSource(songsList.get(MyMediaPlayer.currentIndex).getSongUrl());
+
+                    try {
+                        setResourcesWithMusic();
+                        activity5.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (mediaPlayer != null) {
+                                    if (mediaPlayer.isPlaying()) {
+                                        play.setImageResource(R.drawable.ic_baseline_pause_24);
+                                    }
+                                    else {
+                                        play.setImageResource(R.drawable.ic_baseline_play_arrow_24);
+                                    }
+                                }
+                                new Handler().postDelayed(this, 100);
+                            }
+                        });
+
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -176,7 +167,8 @@ public class activity5 extends AppCompatActivity {
 
     public void setResourcesWithMusic() throws IOException {
         currentSong = songsList.get(MyMediaPlayer.currentIndex);
-        song.setText(currentSong.getTitle());
+        song.setText(currentSong.getName());
+
         play.setOnClickListener(v-> pausePlay());
         nextsong.setOnClickListener(v-> {
             try {
@@ -198,7 +190,7 @@ public class activity5 extends AppCompatActivity {
 
     private void playMusic() throws IOException {
         mediaPlayer.reset();
-        mediaPlayer.setDataSource(currentSong.getPath());
+        mediaPlayer.setDataSource(currentSong.getSongUrl());
         mediaPlayer.prepare();
         mediaPlayer.start();
     }
@@ -229,16 +221,6 @@ public class activity5 extends AppCompatActivity {
             mediaPlayer.start();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        title = data.getStringExtra("title");
-        downloadLink = data.getStringExtra("link");
-        playlistName = data.getStringExtra("playlistname");
-        song.setText(title);
-        playlistname.setText(playlistName);
-        System.out.println("playlist is " + playlistName);
-    }
 
 }
