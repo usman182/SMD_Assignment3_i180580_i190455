@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+
 public class MusicListAdaptor extends RecyclerView.Adapter<MusicListAdaptor.ViewHolder> {
 
     ArrayList<AudioModel> songsList;
@@ -25,6 +28,7 @@ public class MusicListAdaptor extends RecyclerView.Adapter<MusicListAdaptor.View
         this.songsList = songsList;
         this.context = context;
     }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -36,6 +40,8 @@ public class MusicListAdaptor extends RecyclerView.Adapter<MusicListAdaptor.View
     public void onBindViewHolder(ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         AudioModel songsData = songsList.get(position);
         holder.title.setText(songsData.getTitle());
+
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

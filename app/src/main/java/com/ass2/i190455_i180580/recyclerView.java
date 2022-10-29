@@ -1,6 +1,7 @@
 package com.ass2.i190455_i180580;
 
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 
@@ -15,8 +16,14 @@ import java.util.ArrayList;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
+import com.google.firebase.storage.StorageReference;
 
 public class recyclerView extends AppCompatActivity {
 
@@ -43,6 +50,7 @@ public class recyclerView extends AppCompatActivity {
                 MediaStore.Audio.Media.DURATION
         };
 
+
         String selection = MediaStore.Audio.Media.IS_MUSIC +" != 0";
 
 
@@ -54,6 +62,8 @@ public class recyclerView extends AppCompatActivity {
                 if (new File(songsData.getPath()).exists())
                     songsList.add(songsData);
             }
+
+
 
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setAdapter(new MusicListAdaptor(songsList, getApplicationContext()));
