@@ -28,18 +28,21 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
 
 public class activity10 extends AppCompatActivity {
 
     TextView txt1;
-    Button btn1, btn2;
+    Button btn1, recordbutton;
     ImageButton imgbtn1;
     ImageView upload, musicpic;
     MediaPlayer mediaPlayer;
     FirebaseAuth mAuth;
     EditText title;
     DatabaseReference mDatabaseRef;
+    List<Upload> songsList;
 
 
     @Override
@@ -50,7 +53,7 @@ public class activity10 extends AppCompatActivity {
         imgbtn1 = findViewById(R.id.back);
         txt1 = findViewById(R.id.next);
         btn1 = findViewById(R.id.upload);
-        btn2 = findViewById(R.id.record);
+        recordbutton = findViewById(R.id.record);
         upload = findViewById(R.id.uploadmus);
         musicpic = findViewById(R.id.musicpic);
         mAuth=FirebaseAuth.getInstance();
@@ -82,10 +85,15 @@ public class activity10 extends AppCompatActivity {
             }
         });
 
-        btn2.setOnClickListener(new View.OnClickListener() {
+        recordbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(activity10.this, activity11.class));
+                //startActivity(new Intent(activity10.this, activity11.class));
+                Intent intent = new Intent(activity10.this, activity11.class);
+                intent.putExtra("list", (Serializable) songsList);
+
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
 
@@ -135,6 +143,7 @@ public class activity10 extends AppCompatActivity {
                                         String uploadId = mDatabaseRef.push().getKey();
                                         mDatabaseRef.child(uploadId).setValue(upload1);
 
+                                        songsList.add(upload1);
                                         Picasso.get().load(uri.toString()).into(upload);
                                     }
                                 });

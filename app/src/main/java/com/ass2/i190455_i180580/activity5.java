@@ -33,6 +33,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +54,6 @@ public class activity5 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_5);
-
 
 
         img1 = findViewById(R.id.hamburger1);
@@ -110,9 +110,7 @@ public class activity5 extends AppCompatActivity {
                     mediaPlayer.pause();
 
                     play.setImageResource(R.drawable.ic_baseline_pause_24);
-                }
-
-                else {
+                } else {
                     mediaPlayer.start();
 
                     play.setImageResource(R.drawable.ic_baseline_play_arrow_24);
@@ -127,100 +125,105 @@ public class activity5 extends AppCompatActivity {
             public void onClick(View view) {
 
 
+                songsList = (List<Upload>) getIntent().getSerializableExtra("list");
 
-                mediaPlayer = new MediaPlayer();
-                try {
-                    songsList = (List<Upload>) getIntent().getSerializableExtra("list");
-                    mediaPlayer.setDataSource(songsList.get(MyMediaPlayer.currentIndex).getSongUrl());
+                Intent intent = new Intent(activity5.this, activity16.class);
+                intent.putExtra("list3", (Serializable) songsList);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
 
+
+//                mediaPlayer = new MediaPlayer();
+//                try {
+//                    songsList = (List<Upload>) getIntent().getSerializableExtra("list");
+//                    mediaPlayer.setDataSource(songsList.get(MyMediaPlayer.currentIndex).getSongUrl());
+//
+//                    try {
+//                        setResourcesWithMusic();
+//                        activity5.this.runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                if (mediaPlayer != null) {
+//                                    if (mediaPlayer.isPlaying()) {
+//                                        play.setImageResource(R.drawable.ic_baseline_pause_24);
+//                                    }
+//                                    else {
+//                                        play.setImageResource(R.drawable.ic_baseline_play_arrow_24);
+//                                    }
+//                                }
+//                                new Handler().postDelayed(this, 100);
+//                            }
+//                        });
+//
+//
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+            }
+        });
+    }
+
+            public void setResourcesWithMusic() throws IOException {
+                currentSong = songsList.get(MyMediaPlayer.currentIndex);
+                song.setText(currentSong.getName());
+
+                play.setOnClickListener(v -> pausePlay());
+                nextsong.setOnClickListener(v -> {
                     try {
-                        setResourcesWithMusic();
-                        activity5.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (mediaPlayer != null) {
-                                    if (mediaPlayer.isPlaying()) {
-                                        play.setImageResource(R.drawable.ic_baseline_pause_24);
-                                    }
-                                    else {
-                                        play.setImageResource(R.drawable.ic_baseline_play_arrow_24);
-                                    }
-                                }
-                                new Handler().postDelayed(this, 100);
-                            }
-                        });
-
-
+                        playNextSong();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                });
+                previoussong.setOnClickListener(v -> {
+                    try {
+                        playPreviousSong();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
 
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
+                playMusic();
             }
-        });
 
-    }
-
-    public void setResourcesWithMusic() throws IOException {
-        currentSong = songsList.get(MyMediaPlayer.currentIndex);
-        song.setText(currentSong.getName());
-
-        play.setOnClickListener(v-> pausePlay());
-        nextsong.setOnClickListener(v-> {
-            try {
-                playNextSong();
-            } catch (IOException e) {
-                e.printStackTrace();
+            private void playMusic() throws IOException {
+                mediaPlayer.reset();
+                mediaPlayer.setDataSource(currentSong.getSongUrl());
+                mediaPlayer.prepare();
+                mediaPlayer.start();
             }
-        });
-        previoussong.setOnClickListener(v-> {
-            try {
-                playPreviousSong();
-            } catch (IOException e) {
-                e.printStackTrace();
+
+            private void playNextSong() throws IOException {
+                if (MyMediaPlayer.currentIndex == songsList.size() - 1)
+                    return;
+
+                MyMediaPlayer.currentIndex += 1;
+                mediaPlayer.reset();
+                setResourcesWithMusic();
             }
-        });
 
-        playMusic();
-    }
+            private void playPreviousSong() throws IOException {
+                if (MyMediaPlayer.currentIndex == 0)
+                    return;
 
-    private void playMusic() throws IOException {
-        mediaPlayer.reset();
-        mediaPlayer.setDataSource(currentSong.getSongUrl());
-        mediaPlayer.prepare();
-        mediaPlayer.start();
-    }
+                MyMediaPlayer.currentIndex -= 1;
+                mediaPlayer.reset();
+                setResourcesWithMusic();
+            }
 
-    private void playNextSong() throws IOException {
-        if (MyMediaPlayer.currentIndex == songsList.size()-1)
-            return;
+            private void pausePlay() {
+                if (mediaPlayer.isPlaying())
+                    mediaPlayer.pause();
 
-        MyMediaPlayer.currentIndex +=1;
-        mediaPlayer.reset();
-        setResourcesWithMusic();
-    }
-
-    private void playPreviousSong() throws IOException {
-        if (MyMediaPlayer.currentIndex == 0)
-            return;
-
-        MyMediaPlayer.currentIndex -=1;
-        mediaPlayer.reset();
-        setResourcesWithMusic();
-    }
-
-    private void pausePlay(){
-        if (mediaPlayer.isPlaying())
-            mediaPlayer.pause();
-
-        else
-            mediaPlayer.start();
-    }
+                else
+                    mediaPlayer.start();
+            }
 
 
-
-}
+        }

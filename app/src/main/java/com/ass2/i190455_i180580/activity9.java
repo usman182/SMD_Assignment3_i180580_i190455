@@ -98,7 +98,7 @@ public class activity9 extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        //songsList = (ArrayList<Upload>) getIntent().getSerializableExtra("list");
+        //songsList = (List<Upload>) getIntent().getSerializableExtra("list");
 
     }
 }
