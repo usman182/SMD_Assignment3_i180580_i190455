@@ -62,7 +62,6 @@ public class activity5 extends AppCompatActivity {
         song = findViewById(R.id.song);
         addbutton = findViewById(R.id.addbutton);
         playlistname = findViewById(R.id.playlistname);
-        plusimage = findViewById(R.id.plusimage);
         play = findViewById(R.id.play);
         previoussong = findViewById(R.id.previoussong);
         nextsong = findViewById(R.id.nextsong);

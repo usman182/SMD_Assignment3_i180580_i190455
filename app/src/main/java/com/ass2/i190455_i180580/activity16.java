@@ -3,14 +3,12 @@ package com.ass2.i190455_i180580;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
@@ -21,12 +19,14 @@ public class activity16 extends AppCompatActivity {
 
     ImageButton imgbtn1;
     ImageView resumeplay;
-    MediaPlayer mediaPlayer = MyMediaPlayer.getInstance();
+
     List<Upload> songsList;
     Upload currentSong;
     ImageView previoussong, nextsong;
     SeekBar zerseekbar;
     TextView timeofsong;
+    MediaPlayer mediaPlayer = new MediaPlayer();
+    int currentIndexofSong = 0;
 
 
     @Override
@@ -53,30 +53,12 @@ public class activity16 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
-                mediaPlayer = new MediaPlayer();
                 try {
                     songsList = (List<Upload>) getIntent().getSerializableExtra("list3");
-                    mediaPlayer.setDataSource(songsList.get(MyMediaPlayer.currentIndex).getSongUrl());
+                    mediaPlayer.setDataSource(songsList.get(currentIndexofSong).getSongUrl());
 
                     try {
-                        setResourcesWithMusic();
-                        activity16.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (mediaPlayer != null) {
-                                    zerseekbar.setProgress(mediaPlayer.getCurrentPosition());
-                                    timeofsong.setText(convertToMMSS(mediaPlayer.getCurrentPosition() + ""));
-                                    if (mediaPlayer.isPlaying()) {
-                                        resumeplay.setImageResource(R.drawable.ic_baseline_pause_24);
-                                    } else {
-                                        resumeplay.setImageResource(R.drawable.ic_baseline_play_arrow_24);
-                                    }
-                                }
-                                new Handler().postDelayed(this, 100);
-                            }
-                        });
-
+                                setMusicComponents();
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -96,7 +78,7 @@ public class activity16 extends AppCompatActivity {
         zerseekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (mediaPlayer != null && fromUser) {
+                if (mediaPlayer != null && fromUser == true) {
                     mediaPlayer.seekTo(progress);
                 }
             }
@@ -114,30 +96,67 @@ public class activity16 extends AppCompatActivity {
         });
     }
 
-public void setResourcesWithMusic() throws IOException {
-        currentSong = songsList.get(MyMediaPlayer.currentIndex);
+public void setMusicComponents() throws IOException {
+        currentSong = songsList.get(currentIndexofSong);
 
+        resumeplay.setImageResource(R.drawable.ic_baseline_pause_24);
+        resumeplay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-        resumeplay.setOnClickListener(v-> pausePlay());
-        nextsong.setOnClickListener(v-> {
-        try {
-        playNextSong();
-        } catch (IOException e) {
-        e.printStackTrace();
-        }
+                if (mediaPlayer.isPlaying()) {
+                    mediaPlayer.pause();
+                    resumeplay.setImageResource(R.drawable.ic_baseline_play_arrow_24);
+                }
+
+                else {
+                    mediaPlayer.start();
+                    resumeplay.setImageResource(R.drawable.ic_baseline_pause_24);
+                }
+            }
         });
-        previoussong.setOnClickListener(v-> {
-        try {
-        playPreviousSong();
-        } catch (IOException e) {
-        e.printStackTrace();
-        }
+
+        nextsong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    if (currentIndexofSong == songsList.size()-1)
+                        return;
+
+
+                    currentIndexofSong++;
+                    mediaPlayer.reset();
+                    setMusicComponents();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         });
 
-        playMusic();
+        previoussong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    if (currentIndexofSong == 0)
+                        return;
+
+                    currentIndexofSong--;
+                    mediaPlayer.reset();
+                    setMusicComponents();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
+
+
         }
 
-private void playMusic() throws IOException {
+void playMusic() throws IOException {
         mediaPlayer.reset();
         mediaPlayer.setDataSource(currentSong.getSongUrl());
         mediaPlayer.prepare();
@@ -147,38 +166,7 @@ private void playMusic() throws IOException {
 
         }
 
-private void playNextSong() throws IOException {
-        if (MyMediaPlayer.currentIndex == songsList.size()-1)
-        return;
 
-        MyMediaPlayer.currentIndex +=1;
-        mediaPlayer.reset();
-        setResourcesWithMusic();
-        }
-
-private void playPreviousSong() throws IOException {
-        if (MyMediaPlayer.currentIndex == 0)
-        return;
-
-        MyMediaPlayer.currentIndex -=1;
-        mediaPlayer.reset();
-        setResourcesWithMusic();
-        }
-
-private void pausePlay(){
-        if (mediaPlayer.isPlaying())
-        mediaPlayer.pause();
-
-        else
-        mediaPlayer.start();
-        }
-
-    public static String convertToMMSS(String duration){
-        Long millis = Long.parseLong(duration);
-        return String.format("%02d:%02d",
-                TimeUnit.MILLISECONDS.toMinutes(millis) % TimeUnit.HOURS.toMinutes(1),
-                TimeUnit.MILLISECONDS.toSeconds(millis) % TimeUnit.MINUTES.toSeconds(1));
-    }
 
 
 }

@@ -37,13 +37,6 @@
             android:textStyle="bold"
             android:id="@+id/playlists"/>
 
-        <ImageView
-            android:id="@+id/plusimage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="320dp"
-            android:layout_marginTop="80dp"
-            android:src="@drawable/plus" />
 
 
     </RelativeLayout>
