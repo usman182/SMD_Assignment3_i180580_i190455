@@ -76,7 +76,7 @@ public class ChatActivity extends AppCompatActivity {
 
         contact_name=getIntent().getStringExtra("display name");
         contact_email=getIntent().getStringExtra("email");
-        Log.d("rcvr",contact_email);
+        //Log.d("rcvr",contact_email);
         display_name.setText(contact_name);
 
         ls=new ArrayList<>();

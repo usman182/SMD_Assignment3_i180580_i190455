@@ -54,8 +54,7 @@ public class MusicListAdaptor extends RecyclerView.Adapter<MusicListAdaptor.View
             public void onClick(View view) {
                 // go to another activity
 
-                MyMediaPlayer.getInstance().reset();
-                MyMediaPlayer.currentIndex = position;
+
                 Intent i = new Intent(context, activity5.class);
                 i.putExtra("list", (Serializable) songsList);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

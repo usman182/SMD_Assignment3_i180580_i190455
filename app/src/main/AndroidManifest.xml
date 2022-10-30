@@ -22,6 +22,48 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".SettingsFragment"
+            android:exported="false"></activity>
+        <activity
+            android:name=".Upload"
+            android:exported="false"></activity>
+        <activity
+            android:name=".PhoneFragment"
+            android:exported="false"></activity>
+        <activity
+            android:name=".MusicListAdaptor"
+            android:exported="false"></activity>
+        <activity
+            android:name=".MsgHome"
+            android:exported="false"></activity>
+        <activity
+            android:name=".ContactAdapter"
+            android:exported="false"></activity>
+        <activity
+            android:name=".Contact"
+            android:exported="false"></activity>
+        <activity
+            android:name=".ChatMessage"
+            android:exported="false"></activity>
+        <activity
+            android:name=".ChatImgAdapter"
+            android:exported="false"></activity>
+        <activity
+            android:name=".ChatFragment"
+            android:exported="false"></activity>
+        <activity
+            android:name=".ChatAdapter"
+            android:exported="false"></activity>
+        <activity
+            android:name=".ChatActivity"
+            android:exported="false"></activity>
+        <activity
+            android:name=".AudioModel"
+            android:exported="false"></activity>
+        <activity
+            android:name=".AccountFragment"
+            android:exported="false"></activity>
+        <activity
             android:name=".activity23"
             android:exported="false"></activity>
         <activity

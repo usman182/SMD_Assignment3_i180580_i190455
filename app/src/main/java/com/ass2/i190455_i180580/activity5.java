@@ -49,7 +49,7 @@ public class activity5 extends AppCompatActivity {
     String playlistName;
     List<Upload> songsList;
     Upload currentSong;
-    MediaPlayer mediaPlayer = MyMediaPlayer.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

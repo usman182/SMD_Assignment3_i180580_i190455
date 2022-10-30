@@ -33,8 +33,8 @@ public class MsgHome extends AppCompatActivity {
         CreateContactFragment addcontactfrag=new CreateContactFragment();
         bnv.setSelectedItemId(R.id.chat);
 
-        mAuth=FirebaseAuth.getInstance();
-        mAuth.signInWithEmailAndPassword("hasanriaz121@gmail.com","12345678");
+        //mAuth=FirebaseAuth.getInstance();
+        //mAuth.signInWithEmailAndPassword("hasanriaz121@gmail.com","12345678");
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override

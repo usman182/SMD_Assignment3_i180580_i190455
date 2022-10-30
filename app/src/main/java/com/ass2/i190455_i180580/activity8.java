@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class activity8 extends AppCompatActivity {
 
     ImageView logout;
-    TextView username, editprofle, changepassword;
+    TextView username, editprofle, changepassword, messengerhome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +22,7 @@ public class activity8 extends AppCompatActivity {
         username = findViewById(R.id.username);
         editprofle = findViewById(R.id.editprofile);
         changepassword = findViewById(R.id.changepassword);
+        messengerhome = findViewById(R.id.messengerhome);
 
         String userFullName = getIntent().getStringExtra("userFullName");
         username.setText(userFullName);
@@ -44,6 +45,13 @@ public class activity8 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(activity8.this, activity2.class));
+            }
+        });
+
+        messengerhome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(activity8.this, MsgHome.class));
             }
         });
     }
