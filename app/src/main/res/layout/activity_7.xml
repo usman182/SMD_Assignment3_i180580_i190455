@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp">
+
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@color/black"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_baseline_arrow_back_24" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="70dp"
+            android:text="Song Title"
+            android:textColor="@color/white"
+            android:textSize="35dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="70dp"
+            android:text="By Artist"
+            android:textColor="@color/corn"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"
+            android:src="@drawable/id" />
+
+        <EditText
+            android:id="@+id/whatanamazingsong"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="200dp"
+            android:background="@drawable/goldonborder"
+            android:hint="What an amazing song"
+            android:padding="12dp"
+            android:textColorHint="@color/white"
+            android:textSize="18dp" />
+
+        <EditText
+            android:id="@+id/postacomment"
+            android:layout_width="325dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="550dp"
+            android:background="@drawable/goldonborder"
+            android:hint="Post a comment"
+            android:padding="12dp"
+            android:textColorHint="@color/white"
+            android:textSize="18dp" />
+
+        <ImageButton
+            android:id="@+id/comment"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="335dp"
+            android:layout_marginTop="535dp"
+            android:background="@color/black"
+            android:src="@drawable/playbutton" />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="15dp">
+
+
+        <ImageButton
+            android:id="@+id/love"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:background="#2a2831"
+            android:padding="40dp"
+            android:src="@drawable/love" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:background="#2a2831"
+            android:padding="40dp"
+            android:src="@drawable/plus" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:background="#2a2831"
+            android:padding="40dp"
+            android:src="@drawable/search" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:background="#2a2831"
+            android:padding="40dp"
+            android:src="@drawable/listenlater" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#2a2831">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:text="Liked"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:background="#2a2831"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="75dp"
+            android:text="Add"
+            android:textColor="@color/white"
+            android:background="#2a2831"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="75dp"
+            android:text="Search"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:text="listen Later"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
