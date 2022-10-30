@@ -23,7 +23,6 @@ public class activity11 extends AppCompatActivity {
 
     ImageButton imgbtn1;
     ImageButton startrecording;
-    List<SongInfo> songsList;
     MediaRecorder mediaRecorder;
     String filepath;
 
@@ -103,7 +102,7 @@ public class activity11 extends AppCompatActivity {
         }
     }
 
-    private String getRecordingFilePath() {
+    public String getRecordingFilePath() {
         // get the file path
         ContextWrapper contextWrapper = new ContextWrapper(getApplicationContext());
         File directory = contextWrapper.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
