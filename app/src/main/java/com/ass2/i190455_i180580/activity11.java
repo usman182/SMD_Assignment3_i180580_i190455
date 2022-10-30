@@ -24,7 +24,7 @@ public class activity11 extends AppCompatActivity {
     ImageButton imgbtn1;
     ImageButton startrecording;
     MediaRecorder mediaRecorder;
-    String filepath;
+    String filepath="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
