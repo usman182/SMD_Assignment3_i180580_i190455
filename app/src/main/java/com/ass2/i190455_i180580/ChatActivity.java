@@ -7,7 +7,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ActivityNotFoundException;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -60,6 +63,10 @@ public class ChatActivity extends AppCompatActivity {
     DatabaseReference mRef=rdb.getReference();
     FirebaseAuth mAuth=FirebaseAuth.getInstance();
 
+    MsgrDbHelper helper=new MsgrDbHelper(ChatActivity.this);
+    SQLiteDatabase db=helper.getWritableDatabase();
+    SQLiteDatabase dbr=helper.getReadableDatabase();
+
     FirebaseUser user;
     UserProfileChangeRequest profileUpdates;
 
@@ -94,19 +101,27 @@ public class ChatActivity extends AppCompatActivity {
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                try {
-//                    startActivityForResult(takePictureIntent, 32);
-//                } catch (ActivityNotFoundException e) {
-//                    // display error state to the user
-//                }
-
+//
                 Intent getPictureIntent=new Intent();
                 getPictureIntent.setAction(Intent.ACTION_GET_CONTENT);
                 getPictureIntent.setType("image/*");
                 startActivityForResult(getPictureIntent,33);
             }
         });
+
+        String cols[]={
+                MsgrContracts.MyMessages.MESSAGE,
+                MsgrContracts.MyMessages.RCVR,
+                MsgrContracts.MyMessages.TIME,
+                MsgrContracts.MyMessages.HAS_URI,
+        };
+        String[] args={
+                contact_email
+        };
+        Cursor c=db.query("SELECT * FROM "+MsgrContracts.MyMessages.TABLE_NAME,
+                cols,
+                MsgrContracts.MyMessages.RCVR,args,null,null,null);
+
 
         mRef.child("messages").addChildEventListener(new ChildEventListener() {
             @Override
@@ -176,6 +191,11 @@ public class ChatActivity extends AppCompatActivity {
 
 //                Toast.makeText(ChatActivity.this,"Added to list",Toast.LENGTH_SHORT).show();
                 mRef.child("messages").push().setValue(temp);
+
+                ContentValues cv=new ContentValues();
+                cv.put(MsgrContracts.MyMessages.MESSAGE,message);
+                cv.put(MsgrContracts.MyMessages.RCVR,contact_email);
+                cv.put(MsgrContracts.MyMessages.TIME,temp.getMessageTime());
 //
 
 

@@ -7,6 +7,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,6 +24,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.ass2.i190455_i180580.MainActivity;
+import com.ass2.i190455_i180580.MsgrContracts;
+import com.ass2.i190455_i180580.MsgrDbHelper;
 import com.ass2.i190455_i180580.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -40,6 +45,8 @@ public class CreateContactFragment extends Fragment {
     FirebaseAuth mAuth;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
+    MsgrDbHelper helper=new MsgrDbHelper(getContext());
+    SQLiteDatabase db=helper.getWritableDatabase();
 
     @Nullable
     @Override
@@ -71,6 +78,11 @@ public class CreateContactFragment extends Fragment {
 //                                myRef.child("users").push().setValue(new RDB_User(email.getText().toString(),name.getText().toString(),"l"));
                                 if(mAuth.getCurrentUser()!=null) {
                                     myRef.child("contacts").child(mAuth.getCurrentUser().getUid()).push().setValue(new RDB_User(email.getText().toString(),name.getText().toString(),"l"));
+                                    ContentValues cv=new ContentValues();
+                                    cv.put(MsgrContracts.MyContacts.DISPLAY_NAME,name.getText().toString());
+                                    cv.put(MsgrContracts.MyContacts.EMAIL,email.getText().toString());
+                                    cv.put(MsgrContracts.MyContacts.DISPLAY_PIC,"l");
+                                    db.insert(MsgrContracts.MyContacts.TABLE_NAME,null,cv);
                                 }
 
                             }
@@ -105,6 +117,12 @@ public class CreateContactFragment extends Fragment {
 //        });
 
 
+    }
+
+    @Override
+    public void onStop() {
+        helper.close();
+        super.onStop();
     }
 
     @Override
