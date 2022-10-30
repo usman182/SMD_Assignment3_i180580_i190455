@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,7 +28,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.List;
 
 public class activity10 extends AppCompatActivity {
@@ -42,7 +41,7 @@ public class activity10 extends AppCompatActivity {
     FirebaseAuth mAuth;
     EditText title;
     DatabaseReference mDatabaseRef;
-    List<Upload> songsList;
+    List<SongInfo> songsList = new ArrayList<>();
 
 
     @Override
@@ -70,7 +69,7 @@ public class activity10 extends AppCompatActivity {
                     ).show();
                 }
                 else {
-                    startActivity(new Intent(activity10.this, activity5.class));
+                    startActivity(new Intent(activity10.this, activity9.class));
                 }
             }
         });
@@ -135,20 +134,16 @@ public class activity10 extends AppCompatActivity {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 Task<Uri> task = taskSnapshot.getStorage().getDownloadUrl();
-
-
-
-
                                 task.addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
                                         //System.out.println("Song1 is : --> " + uri.toString());
-                                        Upload upload1 = new Upload(title.getText().toString(), uri.toString());
+                                        SongInfo songInfo1 = new SongInfo(title.getText().toString(), uri.toString());
                                         String uploadId = mDatabaseRef.push().getKey();
-                                        mDatabaseRef.child(uploadId).setValue(upload1);
+                                        mDatabaseRef.child(uploadId).setValue(songInfo1);
 
-                                        songsList.add(upload1);
-                                        Picasso.get().load(uri.toString()).into(upload);
+                                        songsList.add(songInfo1);
+
                                     }
                                 });
                             }

@@ -215,7 +215,7 @@ public class ChatActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                            Toast.makeText(MainActivity.this,"Upload success", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(MainActivity.this,"SongInfo success", Toast.LENGTH_SHORT).show();
                             Task<Uri> task=taskSnapshot.getStorage().getDownloadUrl();
                             task.addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override

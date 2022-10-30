@@ -17,14 +17,13 @@ import androidx.core.content.ContextCompat;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.List;
 
 public class activity11 extends AppCompatActivity {
 
     ImageButton imgbtn1;
     ImageButton startrecording;
-    List<Upload> songsList;
+    List<SongInfo> songsList;
     MediaRecorder mediaRecorder;
     String filepath;
 

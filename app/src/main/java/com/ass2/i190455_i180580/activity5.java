@@ -1,40 +1,15 @@
 package com.ass2.i190455_i180580;
 
-import static com.ass2.i190455_i180580.R.drawable.ic_baseline_play_arrow_24;
-
-import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.storage.FileDownloadTask;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
-import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class activity5 extends AppCompatActivity {
@@ -47,8 +22,8 @@ public class activity5 extends AppCompatActivity {
     String title;
     String downloadLink;
     String playlistName;
-    List<Upload> songsList;
-    Upload currentSong;
+    List<SongInfo> songsList;
+    SongInfo currentSong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +83,7 @@ public class activity5 extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                songsList = (List<Upload>) getIntent().getSerializableExtra("list");
+                songsList = (List<SongInfo>) getIntent().getSerializableExtra("list");
 
                 Intent intent = new Intent(activity5.this, activity16.class);
                 intent.putExtra("list3", (Serializable) songsList);

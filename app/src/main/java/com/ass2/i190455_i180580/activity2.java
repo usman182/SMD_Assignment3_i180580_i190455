@@ -141,11 +141,5 @@ public class activity2 extends AppCompatActivity {
 
 
     }
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        if(mAuth.getCurrentUser()!=null){
-//            startActivity(new Intent(activity2.this,activity3.class));
-//        }
-//    }
+
 }

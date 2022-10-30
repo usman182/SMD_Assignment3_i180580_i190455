@@ -22,8 +22,8 @@ public class activity16 extends AppCompatActivity {
     ImageButton imgbtn1;
     ImageView resumeplay;
 
-    List<Upload> songsList;
-    Upload currentSong;
+    List<SongInfo> songsList;
+    SongInfo currentSong;
     ImageView previoussong, nextsong;
     SeekBar zerseekbar;
     TextView timeofsong;
@@ -43,7 +43,7 @@ public class activity16 extends AppCompatActivity {
         zerseekbar = findViewById(R.id.zeroseekbar);
         timeofsong = findViewById(R.id.timeofsong);
 
-        songsList = (List<Upload>) getIntent().getSerializableExtra("list3");
+        songsList = (List<SongInfo>) getIntent().getSerializableExtra("list3");
 
 
         imgbtn1.setOnClickListener(new View.OnClickListener() {
@@ -58,10 +58,20 @@ public class activity16 extends AppCompatActivity {
             public void onClick(View view) {
 
 
+                if (mediaPlayer.isPlaying()) {
+                    resumeplay.setImageResource(R.drawable.ic_baseline_play_arrow_24);
+                    mediaPlayer.pause();
+                } else {
+                    resumeplay.setImageResource(R.drawable.ic_baseline_pause_24);
+                    mediaPlayer.start();
+                }
+
                     try {
                         if (mediaPlayer.getCurrentPosition() >= 0) {
                                 setMusicComponents();
                         }
+
+
 
 
                     } catch (IOException e) {
@@ -92,38 +102,6 @@ public class activity16 extends AppCompatActivity {
             }
 
         });
-    }
-
-void setMusicComponents() throws IOException {
-        mediaPlayer.reset();
-        currentSong = songsList.get(currentIndexofSong);
-        mediaPlayer.setDataSource(currentSong.getSongUrl());
-
-    resumeplay.setImageResource(R.drawable.ic_baseline_pause_24);
-    activity16.this.runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-                zerseekbar.setProgress(mediaPlayer.getCurrentPosition());
-                timeofsong.setText(converttoMMSS(String.valueOf(mediaPlayer.getCurrentPosition())));
-
-
-            new Handler().postDelayed(this, 100);
-        }
-    });
-
-        resumeplay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mediaPlayer.isPlaying()) {
-                    resumeplay.setImageResource(R.drawable.ic_baseline_play_arrow_24);
-                    mediaPlayer.pause();
-                }
-                else {
-                    resumeplay.setImageResource(R.drawable.ic_baseline_pause_24);
-                    mediaPlayer.start();
-                }
-            }
-        });
 
         nextsong.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,6 +112,7 @@ void setMusicComponents() throws IOException {
 
                     // for last song
                     if (currentIndexofSong == songsList.size()-1) {
+                        mediaPlayer.reset();
                         Toast.makeText(getApplicationContext(), "There is no next song", Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -144,7 +123,10 @@ void setMusicComponents() throws IOException {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+
             }
+
         });
 
         previoussong.setOnClickListener(new View.OnClickListener() {
@@ -155,6 +137,7 @@ void setMusicComponents() throws IOException {
                     mediaPlayer.reset();
                     // for previous song before any previous
                     if (currentIndexofSong == 0) {
+                        mediaPlayer.reset();
                         Toast.makeText(getApplicationContext(), "There is no previous song", Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -166,18 +149,56 @@ void setMusicComponents() throws IOException {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
             }
+
         });
+    }
+
+void setMusicComponents() throws IOException {
+
+    currentSong = songsList.get(currentIndexofSong);
+    mediaPlayer.reset();
+    mediaPlayer.setDataSource(currentSong.getSongUrl());
+
+
+    activity16.this.runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+            zerseekbar.setProgress(mediaPlayer.getCurrentPosition());
+            timeofsong.setText(converttoMMSS(String.valueOf(mediaPlayer.getCurrentPosition())));
+
+
+
+            new Handler().postDelayed(this, 50);
+        }
+    });
+
+    resumeplay.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (mediaPlayer.isPlaying()) {
+                resumeplay.setImageResource(R.drawable.ic_baseline_play_arrow_24);
+                mediaPlayer.pause();
+            } else {
+                resumeplay.setImageResource(R.drawable.ic_baseline_pause_24);
+                mediaPlayer.start();
+            }
+        }
+    });
+
 
     // play the msuic now
-    mediaPlayer.prepare();
-    mediaPlayer.start();
-    zerseekbar.setProgress(0);
-    zerseekbar.setMax(mediaPlayer.getDuration());
+    try {
 
-
-        }
-
+        mediaPlayer.prepare();
+        mediaPlayer.start();
+        zerseekbar.setProgress(0);
+        zerseekbar.setMax(mediaPlayer.getDuration());
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
 
 
 

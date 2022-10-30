@@ -3,32 +3,23 @@ package com.ass2.i190455_i180580;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.media.MediaPlayer;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 public class MusicListAdaptor extends RecyclerView.Adapter<MusicListAdaptor.ViewHolder> {
 
-    List<Upload> songsList;
+    List<SongInfo> songsList;
     Context context;
     String playlistname;
 
-    public MusicListAdaptor(List<Upload> songsList, Context context, String playlistname) {
+    public MusicListAdaptor(List<SongInfo> songsList, Context context, String playlistname) {
         this.songsList = songsList;
         this.context = context;
         this.playlistname = playlistname;
@@ -43,7 +34,7 @@ public class MusicListAdaptor extends RecyclerView.Adapter<MusicListAdaptor.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        Upload songsData = songsList.get(position);
+        SongInfo songsData = songsList.get(position);
         songsData.setPlaylistName(playlistname);
         holder.title.setText(songsData.getName());
 

@@ -17,8 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class activity9 extends AppCompatActivity {
@@ -33,7 +31,7 @@ public class activity9 extends AppCompatActivity {
     String audioID = null;
     Task<Uri> task;
     String audioLink = null;
-    List<Upload> songsList;
+    List<SongInfo> songsList;
 
 
     @Override
@@ -82,13 +80,4 @@ public class activity9 extends AppCompatActivity {
 
     }
 
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        //songsList = (List<Upload>) getIntent().getSerializableExtra("list");
-
-    }
 }

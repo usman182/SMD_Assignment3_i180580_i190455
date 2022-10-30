@@ -25,7 +25,7 @@
             android:name=".SettingsFragment"
             android:exported="false"></activity>
         <activity
-            android:name=".Upload"
+            android:name=".SongInfo"
             android:exported="false"></activity>
         <activity
             android:name=".PhoneFragment"

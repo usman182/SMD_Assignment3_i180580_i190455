@@ -2,34 +2,34 @@ package com.ass2.i190455_i180580;
 
 import java.io.Serializable;
 
-public class Upload implements Serializable {
-    private String mName;
-    private String mSongURL;
+public class SongInfo implements Serializable {
+    private String songName;
+    private String songURL;
     private String playlistName;
 
-    public Upload() {
+    public SongInfo() {
 
     }
 
-    public Upload(String name, String songLink) {
-        mName = name;
-        mSongURL = songLink;
+    public SongInfo(String name, String songLink) {
+        songName = name;
+        songURL = songLink;
     }
 
     public String getName() {
-        return mName;
+        return songName;
     }
 
     public void setName(String name) {
-        mName = name;
+        songName = name;
     }
 
     public String getSongUrl() {
-        return mSongURL;
+        return songURL;
     }
 
     public void setSongUrl(String songUrl) {
-        mSongURL = songUrl;
+        songURL = songUrl;
     }
 
 
