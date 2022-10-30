@@ -50,27 +50,10 @@ public class activity11 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                        try {
-                            //System.out.println("Hello");
-
-
-                            // code to start the recording
-                            mediaRecorder = new MediaRecorder();
-                            mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-                            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-                            // put the file path here
-                            mediaRecorder.setOutputFile(getRecordingFilePath());
-                            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-                            mediaRecorder.prepare();
-                            mediaRecorder.start();
 
                             // print the toast message
                             Toast.makeText(activity11.this, "Recording started", Toast.LENGTH_SHORT).show();
 
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
 
 
                 Intent intent = new Intent(activity11.this, activity12.class);
@@ -80,8 +63,6 @@ public class activity11 extends AppCompatActivity {
 
                     }
                 });
-
-
 
     }
 
@@ -102,16 +83,6 @@ public class activity11 extends AppCompatActivity {
         }
     }
 
-    public String getRecordingFilePath() {
-        // get the file path
-        ContextWrapper contextWrapper = new ContextWrapper(getApplicationContext());
-        File directory = contextWrapper.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
-        File file = new File(directory, "abc"+".mp3");
-
-        filepath = file.getPath();
-        System.out.println("Path is --> " + filepath);
-        return file.getPath();
-    }
 
 
 
