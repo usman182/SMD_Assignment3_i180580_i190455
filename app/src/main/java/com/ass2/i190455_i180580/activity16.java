@@ -3,11 +3,13 @@ package com.ass2.i190455_i180580;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -41,6 +43,8 @@ public class activity16 extends AppCompatActivity {
         zerseekbar = findViewById(R.id.zeroseekbar);
         timeofsong = findViewById(R.id.timeofsong);
 
+        songsList = (List<Upload>) getIntent().getSerializableExtra("list3");
+
 
         imgbtn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,22 +57,16 @@ public class activity16 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                try {
-                    songsList = (List<Upload>) getIntent().getSerializableExtra("list3");
-                    mediaPlayer.setDataSource(songsList.get(currentIndexofSong).getSongUrl());
 
                     try {
+                        if (mediaPlayer.getCurrentPosition() >= 0) {
                                 setMusicComponents();
+                        }
+
 
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
 
             }
 
@@ -96,22 +94,33 @@ public class activity16 extends AppCompatActivity {
         });
     }
 
-public void setMusicComponents() throws IOException {
+void setMusicComponents() throws IOException {
+        mediaPlayer.reset();
         currentSong = songsList.get(currentIndexofSong);
+        mediaPlayer.setDataSource(currentSong.getSongUrl());
 
-        resumeplay.setImageResource(R.drawable.ic_baseline_pause_24);
+    resumeplay.setImageResource(R.drawable.ic_baseline_pause_24);
+    activity16.this.runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+                zerseekbar.setProgress(mediaPlayer.getCurrentPosition());
+                timeofsong.setText(converttoMMSS(String.valueOf(mediaPlayer.getCurrentPosition())));
+
+
+            new Handler().postDelayed(this, 100);
+        }
+    });
+
         resumeplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (mediaPlayer.isPlaying()) {
-                    mediaPlayer.pause();
                     resumeplay.setImageResource(R.drawable.ic_baseline_play_arrow_24);
+                    mediaPlayer.pause();
                 }
-
                 else {
-                    mediaPlayer.start();
                     resumeplay.setImageResource(R.drawable.ic_baseline_pause_24);
+                    mediaPlayer.start();
                 }
             }
         });
@@ -120,12 +129,16 @@ public void setMusicComponents() throws IOException {
             @Override
             public void onClick(View view) {
                 try {
-                    if (currentIndexofSong == songsList.size()-1)
-                        return;
 
-
-                    currentIndexofSong++;
                     mediaPlayer.reset();
+
+                    // for last song
+                    if (currentIndexofSong == songsList.size()-1) {
+                        Toast.makeText(getApplicationContext(), "There is no next song", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    currentIndexofSong++;
+
                     setMusicComponents();
 
                 } catch (IOException e) {
@@ -138,11 +151,16 @@ public void setMusicComponents() throws IOException {
             @Override
             public void onClick(View view) {
                 try {
-                    if (currentIndexofSong == 0)
+
+                    mediaPlayer.reset();
+                    // for previous song before any previous
+                    if (currentIndexofSong == 0) {
+                        Toast.makeText(getApplicationContext(), "There is no previous song", Toast.LENGTH_SHORT).show();
                         return;
+                    }
 
                     currentIndexofSong--;
-                    mediaPlayer.reset();
+
                     setMusicComponents();
 
                 } catch (IOException e) {
@@ -151,19 +169,23 @@ public void setMusicComponents() throws IOException {
             }
         });
 
-
+    // play the msuic now
+    mediaPlayer.prepare();
+    mediaPlayer.start();
+    zerseekbar.setProgress(0);
+    zerseekbar.setMax(mediaPlayer.getDuration());
 
 
         }
 
-void playMusic() throws IOException {
-        mediaPlayer.reset();
-        mediaPlayer.setDataSource(currentSong.getSongUrl());
-        mediaPlayer.prepare();
-        mediaPlayer.start();
-        zerseekbar.setProgress(0);
-        zerseekbar.setMax(mediaPlayer.getDuration());
 
+
+
+        String converttoMMSS(String duration) {
+        Long millis = Long.parseLong(duration);
+        return String.format("%02d:%02d",
+                TimeUnit.MILLISECONDS.toMinutes(millis) % TimeUnit.HOURS.toMinutes(1),
+                TimeUnit.MILLISECONDS.toSeconds(millis) % TimeUnit.MINUTES.toSeconds(1));
         }
 
 

@@ -78,6 +78,7 @@
             android:src="@drawable/playingbutton" />
 
         <ImageButton
+            android:id="@+id/playrecording"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="220dp"
