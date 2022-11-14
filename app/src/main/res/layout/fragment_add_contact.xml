@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black"
+    tools:context=".AddContactFragment"
+    android:gravity="center">
+
+    <EditText
+        android:layout_width="340dp"
+        android:layout_height="70dp"
+        android:background="@drawable/rounded_rectangle_white"
+        android:hint="Name"
+        android:padding="15dp"
+        android:layout_margin="10dp"
+        android:id="@+id/name"
+        />
+    <EditText
+        android:layout_width="340dp"
+        android:layout_height="70dp"
+        android:background="@drawable/rounded_rectangle_white"
+        android:hint="Email"
+        android:padding="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="50dp"
+        android:id="@+id/email"
+        />
+   <Button
+       android:layout_width="150dp"
+       android:layout_height="50dp"
+       android:layout_marginTop="100dp"
+       android:text="Save"
+       android:textColor="@color/white"
+       android:background="@drawable/golden_button_background"
+       android:id="@+id/save"/>
+
+</LinearLayout>

@@ -28,18 +28,15 @@ public class MsgHome extends AppCompatActivity {
         PhoneFragment phonefrag=new PhoneFragment();
         AccountFragment accfrag=new AccountFragment();
         SettingsFragment settingsfrag=new SettingsFragment();
-//        CreateContactFragment addcontactfrag=new CreateContactFragment();
-//        bnv.setSelectedItemId(R.id.chat);
+//
+        getSupportFragmentManager().beginTransaction().replace(R.id.view, chatfrag).commit();
 
-        //mAuth=FirebaseAuth.getInstance();
-        //mAuth.signInWithEmailAndPassword("hasanriaz121@gmail.com","12345678");
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-//        add.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                getSupportFragmentManager().beginTransaction().replace(R.id.view, addcontactfrag).commit();
-//            }
-//        });
+            }
+        });
         bnv.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
