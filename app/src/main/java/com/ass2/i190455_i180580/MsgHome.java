@@ -37,6 +37,10 @@ public class MsgHome extends AppCompatActivity {
 
             }
         });
+        if(savedInstanceState==null){
+            MenuItem item=bnv.getMenu().getItem(0);
+
+        }
         bnv.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

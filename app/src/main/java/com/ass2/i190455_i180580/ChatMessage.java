@@ -17,6 +17,7 @@ public class ChatMessage implements Comparable<ChatMessage> {
     private String rcvr;
     private String uri;
     private boolean has_uri = false;
+    private String msgId;
 
 
 
@@ -114,6 +115,14 @@ public class ChatMessage implements Comparable<ChatMessage> {
 
     public void setHas_uri(boolean has_uri) {
         this.has_uri = has_uri;
+    }
+
+    public String getMsgId() {
+        return msgId;
+    }
+
+    public void setMsgId(String msgId) {
+        this.msgId = msgId;
     }
 
     @Override

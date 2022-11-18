@@ -1,5 +1,8 @@
 package com.ass2.i190455_i180580;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +23,9 @@ public class AddContactFragment extends Fragment {
 
     EditText name,email;
     Button save;
+
+    MsgrDbHelper helper;
+    SQLiteDatabase db;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -52,6 +59,13 @@ public class AddContactFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        helper=new MsgrDbHelper(getContext());
+        db=helper.getWritableDatabase();
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -75,6 +89,12 @@ public class AddContactFragment extends Fragment {
 //                Send Contact email to server for user verification
 //                If user verified, get contact dp
 //                Save contact to local storage
+                ContentValues cv=new ContentValues();
+                cv.put(MsgrContracts.MyContacts.DISPLAY_NAME,name.getText().toString());
+                cv.put(MsgrContracts.MyContacts.EMAIL,email.getText().toString());
+                cv.put(MsgrContracts.MyContacts.DISPLAY_PIC,"null");
+                db.insert(MsgrContracts.MyContacts.TABLE_NAME,null,cv);
+                Toast.makeText(getContext(),"Contact Added",Toast.LENGTH_SHORT).show();
 
 
             }

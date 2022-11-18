@@ -65,7 +65,7 @@
                 android:gravity="center"
                 android:textColor="#3E3E3E"
                 />
-            <de.hdodenhof.circleimageview.CircleImageView
+            <com.example.squircleview.SquircleView
                 android:id="@+id/alert"
                 android:layout_width="25dp"
                 android:layout_height="25dp"

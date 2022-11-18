@@ -17,7 +17,7 @@ import com.example.squircleview.SquircleView;
 
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
+//import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHolder> {
     Context c;
@@ -70,7 +70,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
         ConstraintLayout parent;
         TextView display_name,msg,date_time;
         SquircleView dp;
-        CircleImageView alert;
+//        CircleImageView alert;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             parent=itemView.findViewById(R.id.parent);
@@ -78,7 +78,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
             msg=itemView.findViewById(R.id.latest_msg);
             date_time=itemView.findViewById(R.id.date_time);
             dp=itemView.findViewById(R.id.dp);
-            alert=itemView.findViewById(R.id.alert);
+//            alert=itemView.findViewById(R.id.alert);
         }
     }
 }

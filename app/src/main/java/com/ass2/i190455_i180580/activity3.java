@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,8 +26,9 @@ public class activity3 extends AppCompatActivity {
     EditText edtxt2;
     TextView txt2;
     Button btn1;
+    String email,password;
 
-    FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,64 +43,31 @@ public class activity3 extends AppCompatActivity {
         txt2 = findViewById(R.id.show);
 
         btn1 = findViewById(R.id.signinbutton);
-        mAuth = FirebaseAuth.getInstance();
+
 
         // toasts when clicking the sign in button
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = edtxt1.getText().toString();
-                String password = edtxt2.getText().toString();
-
-                if (edtxt1.length() == 0) {
-                    Toast.makeText(activity3.this, "Email not entered! Please enter it first!!", Toast.LENGTH_SHORT).show();
-                }
-
-                if (edtxt2.length() == 0) {
-                    Toast.makeText(activity3.this, "Password not entered! Please enter it first!!", Toast.LENGTH_SHORT).show();
-                }
-
-                else {
-                    mAuth.signInWithEmailAndPassword(email, password)
-
-                                    .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                                        FirebaseUser user = mAuth.getCurrentUser();
-                                        @Override
-                                        public void onSuccess(AuthResult authResult) {
-                                            startActivity(new Intent(activity3.this, activity5.class));
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(
-                                                    activity3.this,
-                                                    "Failed",
-                                                    Toast.LENGTH_LONG).show();
-                                        }
-                                    });
-
-                }
-
+                Log.d("Button Press","Pressed");
+                email=edtxt1.getText().toString();
+                password=edtxt2.getText().toString();
+                WebAuth wAuth=WebAuth.getInstance(activity3.this);
+                Log.d("email",email);
+                Log.d("passsword",password);
+                wAuth.SignIn(email,password);
+//                if(wAuth.signedIn) {
+//                    Intent i = new Intent(activity3.this, MsgHome.class);
+//                    startActivity(i);
+//                    finish();
+//                }
+//                WebAuth.User u=wAuth.getCurrentUser();
+//                Log.d("User",u.email);
             }
         });
 
         // for showing the password
-        txt2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                edtxt2.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-            }
-        });
 
-        // for sign up
-        txt1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                startActivity(new Intent(activity3.this, activity2.class));
-            }
-        });
 
 
     }

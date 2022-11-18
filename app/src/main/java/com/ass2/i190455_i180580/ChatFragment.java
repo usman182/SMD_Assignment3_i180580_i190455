@@ -1,5 +1,7 @@
 package com.ass2.i190455_i180580;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +27,9 @@ public class ChatFragment extends Fragment {
     List<ChatMessage> cs;
     ChatAdapter x;
     RecyclerView.LayoutManager lm;
+
+    MsgrDbHelper helper;
+    SQLiteDatabase db;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -57,6 +63,13 @@ public class ChatFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        helper=new MsgrDbHelper(getContext());
+        db=helper.getReadableDatabase();
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -70,8 +83,31 @@ public class ChatFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_chat, container, false);
 
+        contacts_list=view.findViewById(R.id.contacts_list);
+//        my_contacts=getData();
+
 
         // Inflate the layout for this fragment
         return view;
+    }
+
+    protected List<Contact> getData(){
+        List <Contact> ls=new ArrayList<>();
+        Contact temp;
+        String a,b,cc;
+        String[] cols={MsgrContracts.MyContacts.DISPLAY_NAME,MsgrContracts.MyContacts.EMAIL,MsgrContracts.MyContacts.DISPLAY_PIC};
+        Cursor c=db.query(MsgrContracts.MyContacts.TABLE_NAME,cols,null,null,null,null,
+                MsgrContracts.MyContacts.DISPLAY_NAME+" ASC");
+
+        while(c.moveToNext()){
+            a=(c.getString(c.getColumnIndexOrThrow(cols[0])));
+            b=(c.getString(c.getColumnIndexOrThrow(cols[1])));
+            cc=(c.getString(c.getColumnIndexOrThrow(cols[2])));
+            temp=new Contact(a,b);
+            temp.setDp(cc);
+            ls.add(temp);
+        }
+        c.close();
+        return ls;
     }
 }

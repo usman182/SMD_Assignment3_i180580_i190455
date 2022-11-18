@@ -44,4 +44,5 @@ dependencies {
 
     implementation 'com.github.android-inheritx:SquircleImageView:0.1.2'
     implementation 'com.android.volley:volley:1.2.1'
+    implementation 'com.karumi:dexter:6.2.2'
 }
