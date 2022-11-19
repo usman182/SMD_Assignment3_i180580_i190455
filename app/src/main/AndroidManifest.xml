@@ -17,15 +17,11 @@
         <activity
             android:name=".SettingsFragment"
             android:exported="false"></activity>
-        <activity
-            android:name=".SongInfo"
-            android:exported="false"></activity>
+
         <activity
             android:name=".PhoneFragment"
             android:exported="false"></activity>
-        <activity
-            android:name=".MusicListAdaptor"
-            android:exported="false"></activity>
+
         <activity
             android:name=".MsgHome"
             android:exported="false"></activity>
@@ -49,9 +45,6 @@
             android:exported="false"></activity>
         <activity
             android:name=".ChatActivity"
-            android:exported="false"></activity>
-        <activity
-            android:name=".AudioModel"
             android:exported="false"></activity>
         <activity
             android:name=".AccountFragment"
