@@ -15,13 +15,6 @@
         android:theme="@style/Theme.I190455_i180580"
         tools:targetApi="31">
         <activity
-            android:name=".recyclerView"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".SettingsFragment"
             android:exported="false"></activity>
         <activity
@@ -62,63 +55,6 @@
             android:exported="false"></activity>
         <activity
             android:name=".AccountFragment"
-            android:exported="false"></activity>
-        <activity
-            android:name=".activity23"
-            android:exported="false"></activity>
-        <activity
-            android:name=".activity22"
-            android:exported="false"></activity>
-        <activity
-            android:name=".activity21"
-            android:exported="false"></activity>
-        <activity
-            android:name=".activity20"
-            android:exported="false"></activity>
-        <activity
-            android:name=".activity19"
-            android:exported="false"></activity>
-        <activity
-            android:name=".activity18"
-            android:exported="false"></activity>
-        <activity
-            android:name=".activity17"
-            android:exported="false"></activity>
-        <activity
-            android:name=".activity16"
-            android:exported="false"></activity>
-        <activity
-            android:name=".activity15"
-            android:exported="false"></activity>
-        <activity
-            android:name=".activity14"
-            android:exported="false"></activity>
-        <activity
-            android:name=".activity13"
-            android:exported="false"></activity>
-        <activity
-            android:name=".activity12"
-            android:exported="false"></activity>
-        <activity
-            android:name=".activity11"
-            android:exported="false"></activity>
-        <activity
-            android:name=".activity10"
-            android:exported="false"></activity>
-        <activity
-            android:name=".activity9"
-            android:exported="false"></activity>
-        <activity
-            android:name=".activity8"
-            android:exported="false"></activity>
-        <activity
-            android:name=".activity7"
-            android:exported="false"></activity>
-        <activity
-            android:name=".activity6"
-            android:exported="false"></activity>
-        <activity
-            android:name=".activity5"
             android:exported="false"></activity>
         <activity
             android:name=".activity4"

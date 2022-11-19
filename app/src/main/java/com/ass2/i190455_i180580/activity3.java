@@ -68,7 +68,7 @@ public class activity3 extends AppCompatActivity {
 
                                             String userFullName = getIntent().getStringExtra("userFullName");
 
-                                            Intent intent = new Intent(activity3.this, activity5.class);
+                                            Intent intent = new Intent(activity3.this, MsgHome.class);
                                             intent.putExtra("userFullName", userFullName);
                                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                             startActivity(intent);
