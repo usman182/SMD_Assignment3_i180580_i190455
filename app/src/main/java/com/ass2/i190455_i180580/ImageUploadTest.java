@@ -45,6 +45,7 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -65,7 +66,7 @@ import java.util.HashMap;
 import java.util.Map;
 public class ImageUploadTest extends AppCompatActivity {
 
-    Button browse, submit;
+    Button browse, submit,get;
 
     ImageView img;
 
@@ -86,6 +87,8 @@ public class ImageUploadTest extends AppCompatActivity {
         submit = findViewById(R.id.upload);
 
         img = findViewById(R.id.image);
+
+        get=findViewById(R.id.download);
 
      browse.setOnClickListener(new View.OnClickListener() {
          @Override
@@ -119,6 +122,15 @@ public class ImageUploadTest extends AppCompatActivity {
 //             uploaddatatodb();
                 ImageHandler imageHandler=ImageHandler.getInstance(ImageUploadTest.this);
                 imageHandler.sendDP(uri,"1");
+         }
+     });
+
+     get.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View view) {
+             ImageHandler imageHandler=ImageHandler.getInstance(ImageUploadTest.this);
+             imageHandler.getDP(img);
+
          }
      });
 

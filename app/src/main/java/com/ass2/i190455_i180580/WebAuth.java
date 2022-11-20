@@ -56,7 +56,15 @@ public class WebAuth {
         return currentUser.uid;
     }
 
-    public void SignIn(String Email,String Password){
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
+    public void SignIn(String Email, String Password){
 //        Verify User
 //        Get User dp if set
 
@@ -147,6 +155,30 @@ public class WebAuth {
             this.email = email;
             this.password = password;
             this.uid=uid;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+        public String getUid() {
+            return uid;
+        }
+
+        public void setUid(String uid) {
+            this.uid = uid;
         }
     }
 

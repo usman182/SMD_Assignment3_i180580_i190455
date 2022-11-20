@@ -33,5 +33,13 @@
         android:id="@+id/upload"
         android:layout_below="@+id/get"
         android:backgroundTint="#34A759"/>
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text="download"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/download"
+        android:layout_below="@+id/upload"
+        android:backgroundTint="#34A759"/>
 
 </RelativeLayout>
