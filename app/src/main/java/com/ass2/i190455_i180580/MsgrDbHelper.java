@@ -19,7 +19,9 @@ public class MsgrDbHelper extends SQLiteOpenHelper {
 
     public static String CREATE_MESSAGES_TABLE="CREATE TABLE "+
             MsgrContracts.MyMessages.TABLE_NAME+" ( "+
+            MsgrContracts.MyMessages.MSG_ID+" TEXT PRIMARY KEY, "+
             MsgrContracts.MyMessages.MESSAGE+" TEXT, "+
+            MsgrContracts.MyMessages.SNDR+" TEXT, "+
             MsgrContracts.MyMessages.RCVR+" TEXT, "+
             MsgrContracts.MyMessages.HAS_URI+" TEXT, "+
             MsgrContracts.MyMessages.URI+" TEXT, "+

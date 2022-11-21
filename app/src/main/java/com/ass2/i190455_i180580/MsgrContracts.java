@@ -20,6 +20,8 @@ public class MsgrContracts {
         public static String URI = "uri";
         public static String HAS_URI = "has_uri";
         public static String TIME = "time";
+        public static String MSG_ID="msg_id";
+        public static String SNDR="sender";
     }
 
 }

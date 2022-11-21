@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -39,12 +40,13 @@ public class ImageHandler {
     static int GET_FROM_IMG=3;
     Context c;
     Bitmap bitmap;
+    String url="http://192.168.10.5";
 
-    String sendImage_url="http://192.168.10.5/smda/a3/post_img.php";
+    String sendImage_url=url+"/smda/a3/post_img.php";
 
-    String sendDP_url="http://192.168.10.5/smda/a3/test.php";
+    String sendDP_url=url+"/smda/a3/test.php";
 
-    String getDP_url="http://192.168.10.5/smda/a3/get_dp.php";
+    String getDP_url=url+"/smda/a3/get_dp.php";
 
     RequestQueue queue;
 
@@ -147,7 +149,7 @@ public class ImageHandler {
 
         queue=Volley.newRequestQueue(c);
 
-        StringRequest request=new StringRequest(Request.Method.GET, getDP_url, new Response.Listener<String>() {
+        StringRequest request=new StringRequest(Request.Method.POST, getDP_url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try{
@@ -166,7 +168,16 @@ public class ImageHandler {
             public void onErrorResponse(VolleyError error) {
                 Log.d("Response_Sent",error.toString());
             }
-        });
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params=new HashMap<String,String>();
+                WebAuth webauth=WebAuth.getInstance(c);
+                params.put("name",webauth.getCurrentUserId());
+                return params;
+            }
+        };
 
         queue.add(request);
 

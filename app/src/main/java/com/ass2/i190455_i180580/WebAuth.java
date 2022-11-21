@@ -41,6 +41,7 @@ public class WebAuth {
     String password;
     Context c;
     boolean signedIn;
+    String url="http://192.168.10.5";
 
     private WebAuth(){}
 
@@ -68,12 +69,12 @@ public class WebAuth {
 //        Verify User
 //        Get User dp if set
 
-        String url="http://192.168.10.5/smda/a3/sign_in.php";
+
         RequestQueue queue= Volley.newRequestQueue(c);
         if(c==null){
             Log.d("NULL_C","NULL C");
         }
-        StringRequest request=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        StringRequest request=new StringRequest(Request.Method.POST, url+"/smda/a3/sign_in.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try

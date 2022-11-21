@@ -1,13 +1,18 @@
 package com.ass2.i190455_i180580;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,7 +28,12 @@ public class ChatActivity extends AppCompatActivity {
     RecyclerView rv;
     boolean retrieve_old_msgs;
 
+    MsgrDbHelper helper=new MsgrDbHelper(ChatActivity.this);
+    SQLiteDatabase db=helper.getWritableDatabase();
+    SQLiteDatabase dbr=helper.getReadableDatabase();
+
     WebAuth webAuth=WebAuth.getInstance(ChatActivity.this);
+    MsgHandler msgHandler=MsgHandler.getInstance(ChatActivity.this);
 
     String contact_name,contact_email;
     @Override
@@ -38,11 +48,43 @@ public class ChatActivity extends AppCompatActivity {
 
         contact_name=getIntent().getStringExtra("display name");
         contact_email=getIntent().getStringExtra("email");
-        //Log.d("rcvr",contact_email);
         display_name.setText(contact_name);
+
+
+
+        ls=new ArrayList<>();
+        RecyclerView.LayoutManager lm=new LinearLayoutManager(ChatActivity.this);
+        adapter=new ChatAdapter(ls,ChatActivity.this);
+        rv.setLayoutManager(lm);
+
+        sendMsg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                message=msgBox.getText().toString();
+                ChatMessage temp=new ChatMessage(webAuth.getCurrentUser().getEmail(),contact_email,message);
+
+                ContentValues cv=new ContentValues();
+                cv.put(MsgrContracts.MyMessages.MESSAGE,message);
+                cv.put(MsgrContracts.MyMessages.SNDR,webAuth.getCurrentUser().getEmail());
+                cv.put(MsgrContracts.MyMessages.RCVR,contact_email);
+                cv.put(MsgrContracts.MyMessages.TIME,temp.getMessageTime());
+                cv.put(MsgrContracts.MyMessages.HAS_URI,temp.getHas_img());
+//                Send msg to server,then get generated msgID from there
+                msgHandler.sendMsg(temp);
+                cv.put(MsgrContracts.MyMessages.MSG_ID,temp.getMsgId());
+                db.insert(MsgrContracts.MyMessages.TABLE_NAME,null,cv);
+
+                ls.add(temp);
+
+                msgBox.setText("");
+                retrieve_old_msgs=false;
+            }
+        });
     }
 
     public boolean returnChat(String uid,String rcvr){
+//        For only retrieving mesages between user and specific contact
         String userEmail=webAuth.getCurrentUser().getEmail();
         if(Objects.equals(rcvr, contact_email) && Objects.equals(uid, userEmail)){
             return true;
