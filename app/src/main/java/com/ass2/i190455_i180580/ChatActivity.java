@@ -3,16 +3,22 @@ package com.ass2.i190455_i180580;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.squircleview.SquircleView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -37,9 +44,15 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -48,6 +61,7 @@ public class ChatActivity extends AppCompatActivity {
     ImageView sendMsg,camera;
     String message;
     TextView display_name;
+    SquircleView profile_pic;
 
 
     ChatAdapter adapter;
@@ -57,7 +71,6 @@ public class ChatActivity extends AppCompatActivity {
     boolean retrieve_old_msgs;
 
     String contact_name;
-
 
     FirebaseDatabase rdb=FirebaseDatabase.getInstance();
     DatabaseReference mRef=rdb.getReference();
@@ -81,6 +94,9 @@ public class ChatActivity extends AppCompatActivity {
         camera=findViewById(R.id.take_pic);
         display_name=findViewById(R.id.name);
 
+
+        profile_pic = findViewById(R.id.profile_pic);
+
         contact_name=getIntent().getStringExtra("display name");
         contact_email=getIntent().getStringExtra("email");
         //Log.d("rcvr",contact_email);
@@ -97,6 +113,18 @@ public class ChatActivity extends AppCompatActivity {
                 .setDisplayName("Hassan").build();
         user=mAuth.getCurrentUser();
         user.updateProfile(profileUpdates);
+
+
+        verifyStoragePermission(this);
+
+        profile_pic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                takeScreenShot(getWindow().getDecorView().getRootView(), "abc");
+            }
+        });
+
+
 
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -255,6 +283,55 @@ public class ChatActivity extends AppCompatActivity {
                     });
 
 
+        }
+    }
+
+
+    // method for screenshot
+    protected static File takeScreenShot(View view, String fileName) {
+        Date date = new Date();
+        CharSequence format = DateFormat.getDateInstance().format(date);
+
+        try {
+            String dirPath = Environment.getExternalStorageDirectory().toString()+"/chatapplicationphotos";
+            File fileDir = new File(dirPath);
+            fileDir.mkdir();
+
+            String path = dirPath + "/" + fileName + "-" + format + ".jpeg";
+
+            view.setDrawingCacheEnabled(true);
+            Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
+            view.setDrawingCacheEnabled(false);
+
+            File imageFile = new File(path);
+            FileOutputStream fileOutputStream = new FileOutputStream(imageFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+            fileOutputStream.flush();
+            fileOutputStream.close();
+            return imageFile;
+        }
+
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    private static String[] PERMISSION_STORAGE = {
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+    };
+
+    public static void verifyStoragePermission(Activity activity) {
+        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(activity, PERMISSION_STORAGE, 1);
         }
     }
 }
