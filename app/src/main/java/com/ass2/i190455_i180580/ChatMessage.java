@@ -106,6 +106,10 @@ public class ChatMessage implements Comparable<ChatMessage> {
     }
 
     public void setUri(String uri) {
+        if(uri.equals("no")){
+            this.uri=uri;
+            return;
+        }
         this.uri = uri;
         this.has_uri=true;
         this.has_img="true";
@@ -133,6 +137,12 @@ public class ChatMessage implements Comparable<ChatMessage> {
 
     public void setHas_img(String has_img) {
         this.has_img = has_img;
+        if(has_img.equals("false")){
+            this.has_uri=false;
+        }
+        else{
+            this.has_uri=true;
+        }
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -44,6 +45,11 @@ public class ChatFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public ChatFragment(SQLiteDatabase db) {
+        // Get readable db from MsgHome
+        this.db=db;
+    }
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -65,8 +71,11 @@ public class ChatFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        helper=new MsgrDbHelper(getContext());
-        db=helper.getReadableDatabase();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 
     @Override
@@ -84,30 +93,42 @@ public class ChatFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_chat, container, false);
 
         contacts_list=view.findViewById(R.id.contacts_list);
-//        my_contacts=getData();
+
+        my_contacts=new ArrayList<Contact>();
+        contact_adapter=new ContactAdapter(getContext(),my_contacts);
+        lm=new LinearLayoutManager(getContext());
+        contacts_list.setLayoutManager(lm);
+        contacts_list.setAdapter(contact_adapter);
+
+
+        db=((MsgHome)getActivity()).getReadableDB();
+        if(db.isOpen()) {
+            getData(my_contacts);
+        }
 
 
         // Inflate the layout for this fragment
         return view;
     }
 
-    protected List<Contact> getData(){
-        List <Contact> ls=new ArrayList<>();
+    protected void getData(List <Contact> ls){
         Contact temp;
         String a,b,cc;
-        String[] cols={MsgrContracts.MyContacts.DISPLAY_NAME,MsgrContracts.MyContacts.EMAIL,MsgrContracts.MyContacts.DISPLAY_PIC};
+        String[] cols={MsgrContracts.MyContacts.DISPLAY_NAME,MsgrContracts.MyContacts.EMAIL};
         Cursor c=db.query(MsgrContracts.MyContacts.TABLE_NAME,cols,null,null,null,null,
                 MsgrContracts.MyContacts.DISPLAY_NAME+" ASC");
 
         while(c.moveToNext()){
             a=(c.getString(c.getColumnIndexOrThrow(cols[0])));
             b=(c.getString(c.getColumnIndexOrThrow(cols[1])));
-            cc=(c.getString(c.getColumnIndexOrThrow(cols[2])));
+//            cc=(c.getString(c.getColumnIndexOrThrow(cols[2])));
             temp=new Contact(a,b);
-            temp.setDp(cc);
+//            temp.setDp(cc);
             ls.add(temp);
+            contact_adapter.notifyDataSetChanged();
         }
         c.close();
-        return ls;
+
     }
+
 }

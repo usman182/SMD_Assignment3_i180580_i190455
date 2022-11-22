@@ -9,6 +9,7 @@ public class MsgrContracts {
     public static class MyContacts implements BaseColumns {
         public static String TABLE_NAME = "contacts";
         public static String DISPLAY_NAME = "dname";
+        public static String HAS_DP =  "has_dp";
         public static String DISPLAY_PIC = "dp";
         public static String EMAIL = "email";
     }

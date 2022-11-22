@@ -3,6 +3,7 @@ package com.ass2.i190455_i180580;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,7 +16,21 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MsgHome extends AppCompatActivity {
     BottomNavigationView bnv;
     ImageView add;
+    MsgrDbHelper helper;
+    SQLiteDatabase dbr,dbw;
+    Bundle bundle;
+
 //    FirebaseAuth mAuth;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        helper=MsgrDbHelper.getInstance(getApplicationContext());
+        dbr=helper.getReadableDatabase();
+        dbw=helper.getWritableDatabase();
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,17 +39,20 @@ public class MsgHome extends AppCompatActivity {
         bnv=findViewById(R.id.bnv);
         add=findViewById(R.id.add_bt);
 
-        ChatFragment chatfrag=new ChatFragment();
+        ChatFragment chatfrag=new ChatFragment(dbr);
         PhoneFragment phonefrag=new PhoneFragment();
         AccountFragment accfrag=new AccountFragment();
         SettingsFragment settingsfrag=new SettingsFragment();
+        AddContactFragment addcontact=new AddContactFragment(dbw);
+
+
 //
-        getSupportFragmentManager().beginTransaction().replace(R.id.view, chatfrag).commit();
+//        getSupportFragmentManager().beginTransaction().replace(R.id.view, chatfrag).commit();
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                getSupportFragmentManager().beginTransaction().replace(R.id.view, addcontact).commit();
             }
         });
         if(savedInstanceState==null){
@@ -65,8 +83,22 @@ public class MsgHome extends AppCompatActivity {
             }
         });
 
+//        WebAuth.getInstance(MsgHome.this).logContacts(helper,dbr);
 
     }
 
+    public SQLiteDatabase getReadableDB(){
+        return dbr;
+    }
 
+    public SQLiteDatabase getWritableDB(){
+        return dbw;
+    }
+
+    @Override
+    protected void onStop() {
+
+
+        super.onStop();
+    }
 }

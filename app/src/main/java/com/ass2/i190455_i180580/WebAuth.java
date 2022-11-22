@@ -2,8 +2,11 @@ package com.ass2.i190455_i180580;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
@@ -145,6 +148,82 @@ public class WebAuth {
         ImageHandler imageHandler=ImageHandler.getInstance(c);
         imageHandler.sendDP(uri,getCurrentUserId());
 
+    }
+
+    public void addContact(String dname,String email,SQLiteDatabase db){
+
+//        Check email against registered users
+//        Add to local contacts db if exists
+        RequestQueue queue=Volley.newRequestQueue(c);
+        StringRequest request=new StringRequest(Request.Method.POST, url + "/smda/a3/add_contact.php", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+                    JSONObject obj=new JSONObject(response);
+                    if(obj.getInt("code")==1){
+                        String temp=obj.getString("email");
+                        if(temp.equals(email)){
+                            ContentValues cv=new ContentValues();
+                            cv.put(MsgrContracts.MyContacts.EMAIL,email);
+                            cv.put(MsgrContracts.MyContacts.DISPLAY_NAME,dname);
+                            cv.put(MsgrContracts.MyContacts.HAS_DP,"no");
+                            cv.put(MsgrContracts.MyContacts.DISPLAY_PIC,"no");
+                            if (db.isOpen()) {
+                                Log.d("Contact","added "+temp);
+                                db.insert(MsgrContracts.MyContacts.TABLE_NAME, null,cv);
+                            }
+                            Toast.makeText(c,"Contact Comparison True",Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Toast.makeText(c,"Contact Comparison False",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+                catch(JSONException e){
+                    Log.d("JSONE",e.toString());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Volley_error", error.toString());
+            }
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params=new HashMap<String,String>();
+                params.put("email",email);
+                return params;
+            }
+        };
+        queue.add(request);
+
+//        helper.close();
+//        logContacts();
+    }
+
+    public void logContacts( MsgrDbHelper helper,SQLiteDatabase db){
+
+        String a,b,cc;
+        String[] cols={MsgrContracts.MyContacts.DISPLAY_NAME,MsgrContracts.MyContacts.EMAIL};
+        if(db.isOpen()) {
+            Cursor c = db.query(MsgrContracts.MyContacts.TABLE_NAME, cols, null, null, null, null,
+                    MsgrContracts.MyContacts.DISPLAY_NAME + " ASC");
+            while (c.moveToNext()) {
+                a = (c.getString(c.getColumnIndexOrThrow(cols[0])));
+                b = (c.getString(c.getColumnIndexOrThrow(cols[1])));
+//            cc=(c.getString(c.getColumnIndexOrThrow(cols[2])));
+                Log.d("Contact_name", a);
+                Log.d("Contact_email", b);
+            }
+            c.close();
+        }
+        else{
+            Log.d("DB_status","closed");
+        }
+//        db.close();
+//        helper.close();
     }
 
     public class User{

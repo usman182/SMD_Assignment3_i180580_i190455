@@ -23,6 +23,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder>{
     List<ChatMessage> ls;
     Context c;
     String uid,uri;
+    ImageHandler imageHandler;
     private static final int ITEM_TYPE_SENDER=1;
     private static final int ITEM_TYPE_RECEIVER=0;
     private static final int ITEM_TYPE_SENDER_PIC=2;
@@ -31,13 +32,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder>{
     public ChatAdapter(List<ChatMessage> ls, Context c) {
         this.ls = ls;
         this.c = c;
-        this.uid= FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        this.uid= WebAuth.getInstance(c).getCurrentUser().getEmail();
+        this.imageHandler=ImageHandler.getInstance(c);
     }
 
     public ChatAdapter(List<ChatMessage>ls,Context c,String uri){
         this.ls = ls;
         this.c = c;
-        this.uid= FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        this.uid= WebAuth.getInstance(c).getCurrentUser().getEmail();
         this.uri=uri;
     }
 

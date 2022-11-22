@@ -39,6 +39,11 @@ public class AddContactFragment extends Fragment {
     public AddContactFragment() {
         // Required empty public constructor
     }
+    public AddContactFragment(SQLiteDatabase dbw) {
+        // Required empty public constructor
+
+        this.db=dbw;
+    }
 
     /**
      * Use this factory method to create a new instance of
@@ -61,8 +66,14 @@ public class AddContactFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        helper=new MsgrDbHelper(getContext());
-        db=helper.getWritableDatabase();
+//        helper=MsgrDbHelper.getInstance(getContext());
+//        db=helper.getWritableDatabase();
+    }
+
+    @Override
+    public void onStop() {
+
+        super.onStop();
     }
 
     @Override
@@ -83,19 +94,18 @@ public class AddContactFragment extends Fragment {
         email=view.findViewById(R.id.email);
         save=view.findViewById(R.id.save);
 
+        db=((MsgHome)getActivity()).getWritableDB();
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                Send Contact email to server for user verification
 //                If user verified, get contact dp
 //                Save contact to local storage
-                ContentValues cv=new ContentValues();
-                cv.put(MsgrContracts.MyContacts.DISPLAY_NAME,name.getText().toString());
-                cv.put(MsgrContracts.MyContacts.EMAIL,email.getText().toString());
-                cv.put(MsgrContracts.MyContacts.DISPLAY_PIC,"null");
-                db.insert(MsgrContracts.MyContacts.TABLE_NAME,null,cv);
-                Toast.makeText(getContext(),"Contact Added",Toast.LENGTH_SHORT).show();
-
+                if(db!=null) {
+                    WebAuth webauth = WebAuth.getInstance(getContext());
+                    webauth.addContact(name.getText().toString(), email.getText().toString(), db);
+                    Toast.makeText(getContext(), "Contact Added", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });

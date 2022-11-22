@@ -9,11 +9,13 @@ import androidx.annotation.Nullable;
 public class MsgrDbHelper extends SQLiteOpenHelper {
     public static String name="musify.db";
     public static int version=1;
+    private static MsgrDbHelper msgrDbHelper;
 
     public static String CREATE_CONTACTS_TABLE="CREATE TABLE "+
             MsgrContracts.MyContacts.TABLE_NAME+" ( "+
             MsgrContracts.MyContacts.DISPLAY_NAME+" TEXT, "+
             MsgrContracts.MyContacts.EMAIL+" TEXT, "+
+            MsgrContracts.MyContacts.HAS_DP+" TEXT, "+
             MsgrContracts.MyContacts.DISPLAY_PIC+" TEXT "+
             ")";
 
@@ -30,6 +32,13 @@ public class MsgrDbHelper extends SQLiteOpenHelper {
 
     public MsgrDbHelper(@Nullable Context context) {
         super(context, name, null, version);
+    }
+
+    public static synchronized MsgrDbHelper getInstance(Context c){
+        if(msgrDbHelper==null){
+            msgrDbHelper=new MsgrDbHelper(c);
+        }
+        return msgrDbHelper;
     }
 
     @Override

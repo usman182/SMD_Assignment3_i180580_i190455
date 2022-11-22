@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,6 +45,8 @@ public class ImageHandler {
 
     String sendImage_url=url+"/smda/a3/post_img.php";
 
+    String getImage_url=url+"/smda/a3/get_img.php";
+
     String sendDP_url=url+"/smda/a3/test.php";
 
     String getDP_url=url+"/smda/a3/get_dp.php";
@@ -61,6 +64,36 @@ public class ImageHandler {
         imageHandler.c=c;
 
         return imageHandler;
+    }
+
+    public void getImage(String msgId,ChatMessage msg){
+            RequestQueue queue= Volley.newRequestQueue(c);
+            StringRequest request=new StringRequest(Request.Method.POST, getImage_url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try{
+                        JSONObject obj=new JSONObject(response);
+                        msg.setUri(obj.getString("img"));
+
+                    }
+                    catch(JSONException e){
+
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            }){
+                @Nullable
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    return super.getParams();
+                }
+            };
+
+            queue.add(request);
     }
 
     public void sendImage(Uri image, String id){

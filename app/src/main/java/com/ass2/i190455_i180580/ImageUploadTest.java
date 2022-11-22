@@ -121,7 +121,7 @@ public class ImageUploadTest extends AppCompatActivity {
          public void onClick(View view) {
 //             uploaddatatodb();
                 ImageHandler imageHandler=ImageHandler.getInstance(ImageUploadTest.this);
-                imageHandler.sendDP(uri,"1");
+                imageHandler.sendImage(uri,"1");
          }
      });
 
@@ -129,7 +129,7 @@ public class ImageUploadTest extends AppCompatActivity {
          @Override
          public void onClick(View view) {
              ImageHandler imageHandler=ImageHandler.getInstance(ImageUploadTest.this);
-             imageHandler.getDP(img);
+
 
          }
      });
