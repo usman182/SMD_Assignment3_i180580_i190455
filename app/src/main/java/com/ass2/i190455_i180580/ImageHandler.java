@@ -53,6 +53,8 @@ public class ImageHandler {
 
     RequestQueue queue;
 
+    String uri="default";
+    ChatMessage buffer;
     private ImageHandler(){
 
     }
@@ -66,19 +68,44 @@ public class ImageHandler {
         return imageHandler;
     }
 
-    public void getImage(String msgId,ChatMessage msg){
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
+    public ChatMessage getBuffer() {
+        return buffer;
+    }
+
+    public void setBuffer(ChatMessage buffer) {
+        this.buffer = buffer;
+    }
+
+    public void getImage(String msgId, ChatMessage msg){
+
             RequestQueue queue= Volley.newRequestQueue(c);
             StringRequest request=new StringRequest(Request.Method.POST, getImage_url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
+                    String tep="Habib";
                     try{
                         JSONObject obj=new JSONObject(response);
-                        msg.setUri(obj.getString("img"));
+                        tep=obj.getString("img");
+                        buffer=new ChatMessage(msg.getUid(),msg.getRcvr(),msg.getMessageText());
+                        buffer.setUri(tep);
+                        setUri(tep);
+                        Log.d("tep",buffer.getUri());
+                        buffer.setUri("haib");
+
 
                     }
                     catch(JSONException e){
 
                     }
+                    
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -89,11 +116,89 @@ public class ImageHandler {
                 @Nullable
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
-                    return super.getParams();
+                    Map <String,String> params=new HashMap<String,String>();
+                    params.put("msgId","2");
+                    return params;
                 }
             };
 
             queue.add(request);
+
+    }
+
+    public String getImage(String msgId,String img){
+        final String[] uri = new String[1];
+        RequestQueue queue= Volley.newRequestQueue(c);
+        StringRequest request=new StringRequest(Request.Method.POST, getImage_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+                    JSONObject obj=new JSONObject(response);
+                    Log.d("Image", obj.getString("img"));
+                    uri[0] =obj.getString("img");
+
+                }
+                catch(JSONException e){
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map <String,String> params=new HashMap<String,String>();
+                params.put("msgId","2");
+                return params;
+            }
+        };
+
+        queue.add(request);
+        queue.addRequestFinishedListener(new RequestQueue.RequestFinishedListener<StringRequest>() {
+            @Override
+            public void onRequestFinished(Request<StringRequest> request) {
+
+            }
+        });
+        return null;
+    }
+
+    public void getImage(String msgId,ImageView img){
+        RequestQueue queue= Volley.newRequestQueue(c);
+        StringRequest request=new StringRequest(Request.Method.POST, getImage_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+                    JSONObject obj=new JSONObject(response);
+                    Log.d("Image", obj.getString("img"));
+                    Picasso.get().load(obj.getString("img")).into(img);
+                    Log.d("msgImage", obj.getString("img"));
+
+                }
+                catch(JSONException e){
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map <String,String> params=new HashMap<String,String>();
+                params.put("msgId","2");
+                return params;
+            }
+        };
+
+        queue.add(request);
     }
 
     public void sendImage(Uri image, String id){

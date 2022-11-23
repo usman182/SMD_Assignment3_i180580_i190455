@@ -50,15 +50,19 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder>{
 
             switch(viewType){
                 case ITEM_TYPE_SENDER:
+                    Log.d("Viewtype","sender");
                     row = LayoutInflater.from(c).inflate(R.layout.row_sent_msg, parent, false);
                     break;
                 case ITEM_TYPE_RECEIVER:
+                    Log.d("Viewtype","receiver");
                     row = LayoutInflater.from(c).inflate(R.layout.row_rcvd_msg, parent, false);
                     break;
                 case ITEM_TYPE_SENDER_PIC:
+                    Log.d("Viewtype","senderPic");
                     row = LayoutInflater.from(c).inflate(R.layout.row_sent_pic, parent, false);
                     break;
                 case ITEM_TYPE_RECEIVER_PIC:
+                    Log.d("Viewtype","receiver");
                     row = LayoutInflater.from(c).inflate(R.layout.row_rcvd_pic, parent, false);
                     break;
                 default:

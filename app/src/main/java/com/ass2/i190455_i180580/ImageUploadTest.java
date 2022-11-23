@@ -129,7 +129,15 @@ public class ImageUploadTest extends AppCompatActivity {
          @Override
          public void onClick(View view) {
              ImageHandler imageHandler=ImageHandler.getInstance(ImageUploadTest.this);
+             ChatMessage temp=new ChatMessage("a","b","c");
+             String uri;
+             imageHandler.getImage("2",temp);
+//
+             uri=imageHandler.getUri();
+             Log.d("msgUri2",uri);
+//             Toast.makeText(ImageUploadTest.this,uri,Toast.LENGTH_LONG).show();
 
+//             Picasso.get().load(temp.getUri()).into(img);
 
          }
      });
@@ -173,15 +181,7 @@ public class ImageUploadTest extends AppCompatActivity {
         if(requestCode==33 && resultCode==RESULT_OK){
             Uri filepath=data.getData();
             uri=filepath;
-            try{
-                InputStream inputStream=getContentResolver().openInputStream(filepath);
-                bitmap= BitmapFactory.decodeStream(inputStream);
-                img.setImageBitmap(bitmap);
-                encodeBitmapImage(bitmap);
-            }
-            catch (Exception e){
-                Log.d("exception",e.toString());
-            }
+           Picasso.get().load(uri).into(img);
         }
     }
 

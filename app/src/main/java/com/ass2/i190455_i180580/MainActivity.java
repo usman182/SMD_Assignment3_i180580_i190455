@@ -20,14 +20,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         WebAuth webAuth=WebAuth.getInstance(MainActivity.this);
-        webAuth.SignIn("hasanriaz121@gmail.com","12345678");
+
         timer = new Timer();
+//        timer.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                Intent intent = new Intent(MainActivity.this, HoldandReleaseTest.class);
+//                startActivity(intent);
+//                finish();
+//            }
+//        }, 1500);
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                Intent intent = new Intent(MainActivity.this, ImageUploadTest.class);
-                startActivity(intent);
-                finish();
+                webAuth.SignIn("hasanriaz121@gmail.com","12345678");
             }
         }, 1500);
 
