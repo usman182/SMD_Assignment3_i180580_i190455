@@ -19,6 +19,8 @@ public class ChatMessage implements Comparable<ChatMessage> {
     private boolean has_uri = false;
     private String has_img="false"; //false
     private String msgId;
+    private String audio="none";
+    private String has_audio="false";
 
 
 
@@ -133,6 +135,25 @@ public class ChatMessage implements Comparable<ChatMessage> {
 
     public String getHas_img() {
         return has_img;
+    }
+
+    public String getAudio() {
+        return audio;
+    }
+
+    public void setAudio(String audio) {
+        this.audio = audio;
+        if(!audio.equals("none")){
+            this.has_audio="true";
+        }
+    }
+
+    public String getHas_audio() {
+        return has_audio;
+    }
+
+    public void setHas_audio(String has_audio) {
+        this.has_audio = has_audio;
     }
 
     public void setHas_img(String has_img) {

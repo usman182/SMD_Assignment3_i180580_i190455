@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.Image;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -93,10 +95,6 @@ public class WebAuth {
                             Log.d("User", uid.toString());
                             Log.d("SignedIn","1");
                             signedIn=true;
-                            Intent i = new Intent(c, MsgHome.class);
-                            c.startActivity(i);
-
-                            ((Activity)c).finish();
                         }
                         else{
                             signedIn=false;
@@ -107,7 +105,7 @@ public class WebAuth {
                 }
                 catch(JSONException e)
                 {
-                    Log.d("Response_Message",e.toString());
+                    Log.d("Response_MessageJE",e.toString());
                     e.printStackTrace();
                 }
 
@@ -115,7 +113,7 @@ public class WebAuth {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Response_Message",error.toString());
+                Log.d("Response_MessageError",error.toString());
             }
         }){
             @Nullable
@@ -129,13 +127,42 @@ public class WebAuth {
             }
         };
 
+        request.setRetryPolicy(new DefaultRetryPolicy(9000,3,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         queue.add(request);
 
 
     }
 
-    public void SignUp(String displayName,String Email,String Password,boolean has_dp){
+    public void SignUp(String displayName,String Email,String Password,boolean has_dp,Uri dp){
+        RequestQueue queue=Volley.newRequestQueue(c);
+        StringRequest request=new StringRequest(Request.Method.POST, url + "/smda/a3/create_user.php", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                SignIn(Email,Password);
+                if(has_dp){
+                    ImageHandler imageHandler= ImageHandler.getInstance(c);
+                    imageHandler.sendDP(dp,getCurrentUserId());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
+            }
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map <String,String> params=new HashMap<String,String>();
+                params.put("display_name",displayName);
+                params.put("email",Email);
+                params.put("password",Password);
+                return params;
+            }
+        };
+
+        queue.add(request);
     }
 
     private void getDP(String uid){

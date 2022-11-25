@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         WebAuth webAuth=WebAuth.getInstance(MainActivity.this);
-
+//        webAuth.SignIn("hasanriaz121@gmail.com","12345678");
         timer = new Timer();
 //        timer.schedule(new TimerTask() {
 //            @Override
@@ -33,9 +34,25 @@ public class MainActivity extends AppCompatActivity {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                webAuth.SignIn("hasanriaz121@gmail.com","12345678");
+                Intent intent = new Intent(MainActivity.this, ImageUploadTest.class);
+                startActivity(intent);
+                finish();
             }
         }, 1500);
+//        if(webAuth.signedIn) {
+//            Log.d("SignIn","success");
+//            timer.schedule(new TimerTask() {
+//                @Override
+//                public void run() {
+//                    Intent intent = new Intent(MainActivity.this, MsgHome.class);
+//                    startActivity(intent);
+//                    finish();
+//                }
+//            }, 1500);
+//        }
+//        else{
+//            Log.d("SignIn","failed");
+//        }
 
 
 

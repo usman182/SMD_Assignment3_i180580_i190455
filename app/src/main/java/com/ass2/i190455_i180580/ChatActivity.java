@@ -155,6 +155,10 @@ public class ChatActivity extends AppCompatActivity {
                     if(!held){
 //                        Stop Recording and save audio file
                         btnStopPressed(view);
+                        ChatMessage temp=new ChatMessage(webAuth.getCurrentUser().getEmail(),contact_email,null);
+                        temp.setAudio(getRecordingFilePath());
+                        ls.add(temp);
+                        adapter.notifyDataSetChanged();
                         held=true;
                         return held;
                     }

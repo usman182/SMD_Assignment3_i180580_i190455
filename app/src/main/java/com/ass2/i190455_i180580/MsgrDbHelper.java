@@ -27,6 +27,8 @@ public class MsgrDbHelper extends SQLiteOpenHelper {
             MsgrContracts.MyMessages.RCVR+" TEXT, "+
             MsgrContracts.MyMessages.HAS_URI+" TEXT, "+
             MsgrContracts.MyMessages.URI+" TEXT, "+
+            MsgrContracts.MyMessages.HAS_AUDIO+" TEXT, "+
+            MsgrContracts.MyMessages.AUDIO+" TEXT, "+
             MsgrContracts.MyMessages.TIME+" TEXT "+
             ")";
 

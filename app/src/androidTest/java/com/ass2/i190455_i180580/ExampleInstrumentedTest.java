@@ -1,6 +1,7 @@
 package com.ass2.i190455_i180580;
 
 import android.content.Context;
+import android.net.Uri;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -23,4 +24,30 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertEquals("com.ass2.i190455_i180580", appContext.getPackageName());
     }
+
+    @Test
+    public void signInTest(Context c){
+        WebAuth webauth=WebAuth.getInstance(c);
+        webauth.SignIn("hasanriaz121gmail.com","12345678");
+        Boolean output=webauth.signedIn;
+        assertEquals(true,output);
+    }
+
+    @Test
+    public void setUriTest(){
+        ChatMessage temp=new ChatMessage("a","b",null);
+        temp.setUri("none");
+        Boolean output=temp.isHas_uri();
+        assertEquals(false,output);
+    }
+
+    @Test
+    public void sendImageTest(Context c, Uri uri, String msgId){
+        ImageHandler imageHandler=ImageHandler.getInstance(c);
+        imageHandler.sendImage(uri,msgId);
+        Boolean output=imageHandler.imageSent();
+        assertEquals(true,output);
+    }
+
+
 }

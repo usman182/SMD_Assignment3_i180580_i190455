@@ -15,6 +15,8 @@ public class MsgrContracts {
     }
 
     public static class MyMessages implements BaseColumns {
+        public static String AUDIO ="audio" ;
+        public static String HAS_AUDIO ="has_audio" ;
         public static String TABLE_NAME = "messages";
         public static String MESSAGE = "message";
         public static String RCVR = "receiver";

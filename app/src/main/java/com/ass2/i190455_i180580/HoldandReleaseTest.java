@@ -3,6 +3,7 @@ package com.ass2.i190455_i180580;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -13,13 +14,20 @@ public class HoldandReleaseTest extends AppCompatActivity {
     Button bt;
     Boolean held=false;
     Boolean clicked=false;
+    WebAuth webAuth=WebAuth.getInstance(HoldandReleaseTest.this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_holdand_release_test);
         tv=findViewById(R.id.tv);
         bt=findViewById(R.id.bt);
-
+        webAuth.SignIn("hasanriaz121@gmail.com","12345678");
+        if(webAuth.signedIn){
+            Log.d("SignIn","YES");
+        }
+        else{
+            Log.d("SignIn","NO");
+        }
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -28,29 +36,29 @@ public class HoldandReleaseTest extends AppCompatActivity {
             }
         });
 
-        bt.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                if(motionEvent.getAction() == MotionEvent.ACTION_UP){
-                    //do something when let go
-                    if(!held) {
-                        tv.setText("Goodbye");
-                        held=true;
-                        return held;
-                    }
-                }
-                return false;
-            }
-
-        });
-        bt.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                tv.setText("LongCLick");
-                held=false;
-                return held;
-            }
-        });
+//        bt.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//
+//                if(motionEvent.getAction() == MotionEvent.ACTION_UP){
+//                    //do something when let go
+//                    if(!held) {
+//                        tv.setText("Goodbye");
+//                        held=true;
+//                        return held;
+//                    }
+//                }
+//                return false;
+//            }
+//
+//        });
+//        bt.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View view) {
+//                tv.setText("LongCLick");
+//                held=false;
+//                return held;
+//            }
+//        });
     }
 }

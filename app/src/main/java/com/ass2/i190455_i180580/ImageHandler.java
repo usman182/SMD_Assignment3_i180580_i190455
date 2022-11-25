@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -52,6 +53,7 @@ public class ImageHandler {
     String getDP_url=url+"/smda/a3/get_dp.php";
 
     RequestQueue queue;
+    Boolean image_sent=false;
 
     String uri="default";
     ChatMessage buffer;
@@ -218,7 +220,8 @@ public class ImageHandler {
         StringRequest request=new StringRequest(Request.Method.POST, sendImage_url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
+                Log.d("Response_Sent","yes");
+                image_sent=true;
             }
         }, new Response.ErrorListener() {
             @Override
@@ -230,17 +233,28 @@ public class ImageHandler {
             @Override
             protected Map<String, String> getParams() {
                 Map <String,String> params=new HashMap<String,String>();
-                WebAuth w=WebAuth.getInstance(c);
+
                 params.put("msgId",id);
                 params.put("upload",encodeImageString);
                 return params;
             }
         };
 
-//        request.setRetryPolicy(new DefaultRetryPolicy(50000,5,
+
+
+//        request.setRetryPolicy(new DefaultRetryPolicy(30000,2,
 //                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         queue.add(request);
+
+    }
+
+    public Boolean imageSent(){
+        if(image_sent){
+            image_sent=false;
+            return true;
+        }
+        return false;
     }
 
     public void sendDP(Uri dp,String id){
