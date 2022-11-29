@@ -46,6 +46,13 @@ public class activity3 extends AppCompatActivity {
 
 
         // toasts when clicking the sign in button
+        txt1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(activity3.this,activity2.class);
+                startActivity(i);
+            }
+        });
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,6 +70,10 @@ public class activity3 extends AppCompatActivity {
 //                }
 //                WebAuth.User u=wAuth.getCurrentUser();
 //                Log.d("User",u.email);
+                if(wAuth.signedIn){
+                    Intent i=new Intent(activity3.this,MsgHome.class);
+                    startActivity(i);
+                }
             }
         });
 

@@ -114,7 +114,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder>{
           });
         }
         else{
-            holder.msg.setText(details.getMessageText());
+            try{
+                holder.msg.setText(details.getMessageText());
+            }
+            catch(NullPointerException np){
+
+            }
         }
         holder.timestamp.setText(details.getMessageTime());
     }
@@ -125,7 +130,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder>{
             if(ls.get(position).isHas_uri()) {
                 return ITEM_TYPE_SENDER_PIC;
             }
-            else if(!ls.get(position).getHas_audio().equals("none")){
+            else if(!ls.get(position).getHas_audio().equals("false")){
                 return ITEM_TYPE_SENDER_AUDIO;
             }
             else{

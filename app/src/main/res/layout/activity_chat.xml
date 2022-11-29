@@ -144,13 +144,26 @@
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:layout_marginRight="25dp"/>
+        <ImageView
+            android:id="@+id/send_audio"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/golden_button_background"
+            android:src="@drawable/ic_baseline_mic_24"
+            android:scaleType="centerInside"
+            android:layout_centerVertical="true"
+
+            android:layout_toLeftOf="@+id/send_msg"
+            android:layout_marginRight="5dp"/>
 
         <EditText
             android:id="@+id/msg_box"
-            android:layout_width="250dp"
+            android:layout_width="200dp"
             android:layout_height="60dp"
             android:layout_centerInParent="true"
             android:background="@null"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/take_pic"
             android:hint="Type Message" />
     </RelativeLayout>
 

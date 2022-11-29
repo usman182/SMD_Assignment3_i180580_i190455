@@ -39,10 +39,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ChatActivity extends AppCompatActivity {
     EditText msgBox;
-    ImageView sendMsg,camera,profile_pic;
+    ImageView sendMsg,camera,profile_pic,sendAud;
     String message;
     TextView display_name;
 
@@ -73,6 +75,7 @@ public class ChatActivity extends AppCompatActivity {
         camera=findViewById(R.id.take_pic);
         display_name=findViewById(R.id.name);
         profile_pic=findViewById(R.id.profile_pic);
+        sendAud=findViewById(R.id.send_audio);
 
         contact_name=getIntent().getStringExtra("display name");
         contact_email=getIntent().getStringExtra("email");
@@ -140,7 +143,7 @@ public class ChatActivity extends AppCompatActivity {
                 retrieve_old_msgs=false;
             }
         });
-        sendMsg.setOnLongClickListener(new View.OnLongClickListener() {
+        sendAud.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 btnRecordPressed(view);
@@ -148,7 +151,7 @@ public class ChatActivity extends AppCompatActivity {
                 return held;
             }
         });
-        sendMsg.setOnTouchListener(new View.OnTouchListener() {
+        sendAud.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if(motionEvent.getAction()==MotionEvent.ACTION_UP){
@@ -235,6 +238,12 @@ public class ChatActivity extends AppCompatActivity {
             cv.put(MsgrContracts.MyMessages.URI,temp.getUri());
 //                Send msg to server,then get generated msgID from there
             msgHandler.sendMsg(temp);
+            Timer timer=new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                }
+            }, 3500);
             cv.put(MsgrContracts.MyMessages.MSG_ID,temp.getMsgId());
             db.insert(MsgrContracts.MyMessages.TABLE_NAME,null,cv);
             ls.add(temp);
